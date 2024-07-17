@@ -1,7 +1,11 @@
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/9ec34bd7-8768-4963-adaa-855cd96c80ec" alt="Group 2" width="300"/>
-  <div>pprof + macOS +  chip</div>
-</div>
+## approf
+apple + pprof = approf
+
+A native macOS app to view [pprof](https://github.com/google/pprof) profiles. Open captured pprof files directly in the app without using the terminal.
+
+## Requirements
+* Graphviz installed
+* macOS Sonoma or later
 
 
 ![Screenshot 2024-07-18 at 06 44 25](https://github.com/user-attachments/assets/dc15f92b-edc8-4684-a058-a4cbf116cf64)
