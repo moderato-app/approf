@@ -1,12 +1,11 @@
 ## approf
-apple + pprof = approf
-
 A native macOS app to view [pprof](https://github.com/google/pprof) profiles. Open captured pprof files directly in the app without using the terminal.
 
+## Install
+Download the latest app from [release](https://github.com/moderato-app/approf/releases/latest).
 ## Requirements
 * Graphviz installed
-* macOS Sonoma or later
-
+* macOS **Sonoma** or later on  **M-series chips**
 
 ![Screenshot 2024-07-18 at 06 44 25](https://github.com/user-attachments/assets/dc15f92b-edc8-4684-a058-a4cbf116cf64)
 ![Group 1](https://github.com/user-attachments/assets/64587501-4f32-410c-8951-87f114acf454)
