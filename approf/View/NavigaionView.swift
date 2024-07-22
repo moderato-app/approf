@@ -1,6 +1,5 @@
 import AppKit
 import ComposableArchitecture
-import KeyboardShortcuts
 import SwiftUI
 
 struct NavigaionView: View {
@@ -11,19 +10,20 @@ struct NavigaionView: View {
       List(store.scope(state: \.pprofs, action: \.pprofs),
            selection: $store.pprofsSelectedId.sending(\.onPprofsSelectedIdChanged))
       { pprofStore in
-        PProfRowView(
-          store: pprofStore,
-          running: pprofStore.isRunning
-        )
-        .contextMenu {
-          Button("Delete", systemImage: "trash", role: .destructive) {
-            store.send(.deleteButtonTapped(pprofStore.id))
+        PProfRowView(store: pprofStore)
+          .contextMenu {
+            Button(action: {
+              store.send(.deleteButtonTapped(pprofStore.id))
+            }) {
+              Text("Delete").foregroundStyle(.red)
+                + Text("    ⌘⇧+⌫").foregroundStyle(.secondary)
+            }
           }
-        }
-        .tag(pprofStore.basic.id)
+          .tag(pprofStore.basic.id)
+          .listRowSeparator(.visible)
+          .listRowSeparatorTint(.secondary.opacity(0.5))
       }
       .navigationSplitViewColumnWidth(min: 200, ideal: 300)
-      .scrollContentBackground(.hidden)
       .overlay {
         shortcuts()
       }

@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		EB0A27312C413CE400AD34ED /* NavigaionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0A27302C413CE400AD34ED /* NavigaionView.swift */; };
+		EB1003E42C4A7865009E61F2 /* GraphvizSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1003E32C4A7865009E61F2 /* GraphvizSetupView.swift */; };
+		EB1003E72C4A7EFC009E61F2 /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = EB1003E62C4A7EFC009E61F2 /* PopupView */; };
+		EB1003E92C4A81D4009E61F2 /* FloatTopTrailing.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1003E82C4A81D4009E61F2 /* FloatTopTrailing.swift */; };
+		EB1003EB2C4A8BC0009E61F2 /* CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1003EA2C4A8BC0009E61F2 /* CountDown.swift */; };
+		EB1003ED2C4A9860009E61F2 /* NotificationFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1003EC2C4A9860009E61F2 /* NotificationFeature.swift */; };
 		EB11A5162C4515C500E696DF /* WKState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB11A5152C4515C500E696DF /* WKState.swift */; };
 		EB170FF32C40697100945866 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB170FF22C40697100945866 /* Buttons.swift */; };
 		EB17F1F62C48169A00ED297A /* FileRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB17F1F52C48169A00ED297A /* FileRowView.swift */; };
@@ -111,6 +116,10 @@
 
 /* Begin PBXFileReference section */
 		EB0A27302C413CE400AD34ED /* NavigaionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigaionView.swift; sourceTree = "<group>"; };
+		EB1003E32C4A7865009E61F2 /* GraphvizSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphvizSetupView.swift; sourceTree = "<group>"; };
+		EB1003E82C4A81D4009E61F2 /* FloatTopTrailing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatTopTrailing.swift; sourceTree = "<group>"; };
+		EB1003EA2C4A8BC0009E61F2 /* CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDown.swift; sourceTree = "<group>"; };
+		EB1003EC2C4A9860009E61F2 /* NotificationFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFeature.swift; sourceTree = "<group>"; };
 		EB11A5152C4515C500E696DF /* WKState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKState.swift; sourceTree = "<group>"; };
 		EB170FF22C40697100945866 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		EB17F1F52C48169A00ED297A /* FileRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileRowView.swift; sourceTree = "<group>"; };
@@ -189,6 +198,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB1003E72C4A7EFC009E61F2 /* PopupView in Frameworks */,
 				EBD292BF2C43168100FFB285 /* Pow in Frameworks */,
 				EBD292B82C430F9700FFB285 /* Sparkle in Frameworks */,
 				EBD292BA2C430F9700FFB285 /* KeyboardShortcuts in Frameworks */,
@@ -214,9 +224,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB13E2C12C499E5E00484479 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				EB1003E32C4A7865009E61F2 /* GraphvizSetupView.swift */,
+				EBD292BB2C43116400FFB285 /* SettingView.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		EB170FF12C40696600945866 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				EB1003EA2C4A8BC0009E61F2 /* CountDown.swift */,
+				EB1003E82C4A81D4009E61F2 /* FloatTopTrailing.swift */,
 				EB8624A62C47A03B0010E153 /* Texts.swift */,
 				EB170FF22C40697100945866 /* Buttons.swift */,
 				EBB37A992C40F7F700D04474 /* Symbols.swift */,
@@ -247,10 +268,10 @@
 		EB8190EE2C45852F007EDE72 /* ImportFeature */ = {
 			isa = PBXGroup;
 			children = (
+				EBEAAAC92C467DD60026C328 /* DropFeature.swift */,
 				EB6530F42C41C09800A66B7C /* DropView.swift */,
 				EB8190EC2C45835A007EDE72 /* ImportFeature.swift */,
 				EB8190EA2C458340007EDE72 /* ImportView.swift */,
-				EBEAAAC92C467DD60026C328 /* DropFeature.swift */,
 			);
 			path = ImportFeature;
 			sourceTree = "<group>";
@@ -276,6 +297,7 @@
 		EB9444202C42F6E50050F0D1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EB13E2C12C499E5E00484479 /* Setting */,
 				EB8190EE2C45852F007EDE72 /* ImportFeature */,
 				EBB794852C410F0900D5AE1C /* AppFeature.swift */,
 				EB0A27302C413CE400AD34ED /* NavigaionView.swift */,
@@ -294,7 +316,6 @@
 				EB94441B2C42F6E50050F0D1 /* AboutView.swift */,
 				EB94441F2C42F6E50050F0D1 /* WelcomeView.swift */,
 				EBD292B32C430F8000FFB285 /* ShortcutView.swift */,
-				EBD292BB2C43116400FFB285 /* SettingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -345,6 +366,7 @@
 				EB9355642C47E9D10055C90D /* StatusView.swift */,
 				EB96D98B2C470E9C00FA6E52 /* UTH.swift */,
 				EB96D98C2C470E9C00FA6E52 /* UnderTheHoodView.swift */,
+				EB1003EC2C4A9860009E61F2 /* NotificationFeature.swift */,
 			);
 			path = UnderTheHood;
 			sourceTree = "<group>";
@@ -402,12 +424,12 @@
 		EBEF3A152C3B255A0003477D = {
 			isa = PBXGroup;
 			children = (
-				EB6E4C082C45424B005C1225 /* ci_scripts */,
 				EB9444292C42F6E50050F0D1 /* approf */,
 				EB94443A2C42F7050050F0D1 /* approfTests */,
 				EB94443E2C42F70E0050F0D1 /* approfUITests */,
 				EBEF3A1F2C3B255A0003477D /* Products */,
 				EBEF3C092C3BBF2A0003477D /* Frameworks */,
+				EB6E4C082C45424B005C1225 /* ci_scripts */,
 			);
 			sourceTree = "<group>";
 		};
@@ -451,6 +473,7 @@
 				EBD292B72C430F9700FFB285 /* Sparkle */,
 				EBD292B92C430F9700FFB285 /* KeyboardShortcuts */,
 				EBD292BE2C43168100FFB285 /* Pow */,
+				EB1003E62C4A7EFC009E61F2 /* PopupView */,
 			);
 			productName = pprof;
 			productReference = EBEF3A1E2C3B255A0003477D /* approf.app */;
@@ -529,6 +552,7 @@
 				EBD292B02C430D2B00FFB285 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				EBD292B12C430D5800FFB285 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				EBD292BD2C43151A00FFB285 /* XCRemoteSwiftPackageReference "Pow" */,
+				EB1003E52C4A7EEC009E61F2 /* XCRemoteSwiftPackageReference "PopupView" */,
 			);
 			productRefGroup = EBEF3A1F2C3B255A0003477D /* Products */;
 			projectDirPath = "";
@@ -583,6 +607,7 @@
 				EB8190ED2C45835A007EDE72 /* ImportFeature.swift in Sources */,
 				EB11A5162C4515C500E696DF /* WKState.swift in Sources */,
 				EB1F1FC12C45AEB700FD585E /* Shortcuts.swift in Sources */,
+				EB1003EB2C4A8BC0009E61F2 /* CountDown.swift in Sources */,
 				EB94442E2C42F6E50050F0D1 /* AppDataSource.swift in Sources */,
 				EB94442F2C42F6E50050F0D1 /* ContentView.swift in Sources */,
 				EB9355652C47E9D10055C90D /* StatusView.swift in Sources */,
@@ -596,6 +621,7 @@
 				EB85AB8D2C3E4D8C0080200A /* DetailView.swift in Sources */,
 				EB85AB872C3DCC300080200A /* SuccessFeature.swift in Sources */,
 				EB96D98D2C470E9C00FA6E52 /* UTH.swift in Sources */,
+				EB1003E92C4A81D4009E61F2 /* FloatTopTrailing.swift in Sources */,
 				EB9355672C47F4E50055C90D /* Image.swift in Sources */,
 				EB96D98E2C470E9C00FA6E52 /* UnderTheHoodView.swift in Sources */,
 				EBB794862C410F0900D5AE1C /* AppFeature.swift in Sources */,
@@ -622,8 +648,10 @@
 				EB85AB972C3E94DC0080200A /* IdleFeature.swift in Sources */,
 				EB5026812C3D139F007C6282 /* Other.swift in Sources */,
 				EB659BC52C3EE91400F3F84E /* Command.swift in Sources */,
+				EB1003E42C4A7865009E61F2 /* GraphvizSetupView.swift in Sources */,
 				EB85AB992C3EAA410080200A /* SuccessView.swift in Sources */,
 				EB85AB892C3DCC670080200A /* FailureFeature.swift in Sources */,
+				EB1003ED2C4A9860009E61F2 /* NotificationFeature.swift in Sources */,
 				EB8190EB2C458340007EDE72 /* ImportView.swift in Sources */,
 				EB1F1FC52C45B38D00FD585E /* Color+Luminance.swift in Sources */,
 				EB6530F52C41C09800A66B7C /* DropView.swift in Sources */,
@@ -961,6 +989,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		EB1003E52C4A7EEC009E61F2 /* XCRemoteSwiftPackageReference "PopupView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/PopupView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.4;
+			};
+		};
 		EB3BC5B92C430A6700C9920F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -1004,6 +1040,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		EB1003E62C4A7EFC009E61F2 /* PopupView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB1003E52C4A7EEC009E61F2 /* XCRemoteSwiftPackageReference "PopupView" */;
+			productName = PopupView;
+		};
 		EBB1899C2C430AD00037A8F4 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EB3BC5B92C430A6700C9920F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;

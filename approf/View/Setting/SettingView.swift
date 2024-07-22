@@ -2,7 +2,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct SettingsView: View {
-  @ObservedObject var asm = AppStorageManager.shared
+  @StateObject var asm = AppStorageManager.shared
   @Environment(\.dismiss) var dismiss
   @State var dotFileExists: (dotPath: String, exist: Bool)? = nil
 

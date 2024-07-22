@@ -4,6 +4,7 @@ struct PProfBasic: Equatable, Identifiable, Codable {
   var id: UUID
   var name: String?
   var filePaths: [String]
+  var createdAt: Date
   var presentation: PProfPresentation
   var httpDetectLog: [HTTPResult]
   var terminalOutput: [TerminalRecord]
@@ -12,6 +13,7 @@ struct PProfBasic: Equatable, Identifiable, Codable {
   init(filePaths: [String], presentation: PProfPresentation = .dft, httpDetectLog: [HTTPResult] = [], terminalOutput: [TerminalRecord] = [], finalCommandArgs: [CommandLine.CommandArg] = []) {
     self.id = UUID()
     self.filePaths = filePaths
+    self.createdAt = Date()
     self.presentation = presentation
     self.httpDetectLog = httpDetectLog
     self.terminalOutput = terminalOutput
@@ -19,7 +21,7 @@ struct PProfBasic: Equatable, Identifiable, Codable {
   }
 
   init(urls: [URL], presentation: PProfPresentation = .dft) {
-    let filePaths = urls.map { $0.path(percentEncoded: false ) }
+    let filePaths = urls.map { $0.path(percentEncoded: false) }
     self.init(filePaths: filePaths, presentation: presentation)
   }
 
@@ -29,6 +31,7 @@ struct PProfBasic: Equatable, Identifiable, Codable {
     try container.encode(self.id, forKey: .id)
     try container.encode(self.name, forKey: .name)
     try container.encode(self.filePaths, forKey: .filePaths)
+    try container.encode(self.createdAt, forKey: .createdAt)
     try container.encode(self.presentation, forKey: .presentation)
   }
 
@@ -38,6 +41,7 @@ struct PProfBasic: Equatable, Identifiable, Codable {
     self.id = try container.decode(UUID.self, forKey: .id)
     self.name = try container.decodeIfPresent(String.self, forKey: .name)
     self.filePaths = try container.decode([String].self, forKey: .filePaths)
+    self.createdAt = try container.decode(Date.self, forKey: .createdAt)
     self.presentation = try container.decode(PProfPresentation.self, forKey: .presentation)
     self.httpDetectLog = []
     self.terminalOutput = []
@@ -49,6 +53,7 @@ struct PProfBasic: Equatable, Identifiable, Codable {
     case id
     case name
     case filePaths
+    case createdAt
     case presentation
   }
 }
@@ -81,15 +86,7 @@ extension PProfBasic {
     guard let firstFileName = firstFile.asUrl?.lastPathComponent else {
       return "No file"
     }
-
-    switch self.presentation {
-    case .dft:
-      return firstFileName
-    case .acc:
-      return "`\(firstFileName)` and \(self.filePaths.count - 1) more"
-    case .diff:
-      return "`\(firstFileName)` and \(self.filePaths.count - 1) more"
-    }
+    return firstFileName
   }
 }
 

@@ -4,6 +4,13 @@ import Network
 
 extension String: @retroactive Error {}
 
+extension Date {
+    func isToday() -> Bool {
+        let calendar = Calendar.current
+        return calendar.isDateInToday(self)
+    }
+}
+
 func findRandomAvailablePort() throws -> UInt16 {
   let parameters = NWParameters.tcp
   parameters.requiredLocalEndpoint = NWEndpoint.hostPort(host: .ipv4(.loopback), port: .any)

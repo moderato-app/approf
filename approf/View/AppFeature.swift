@@ -108,13 +108,16 @@ struct AppFeature {
 
   func sync(_ state: inout Self.State) {
     if !state.synced {
+      var result: IdentifiedArrayOf<DetailFeature.State> = .init()
       for basic in state.$basics.elements {
-        let pprofIds = state.pprofs.ids
-        if !pprofIds.contains(basic.id) {
+        if let pprof = state.pprofs.first(where: { $0.id == basic.id }) {
+          result.append(pprof)
+        } else {
           let pprof = DetailFeature.State(basic: basic, period: .idle(.init()))
-          state.pprofs.insert(pprof, at: 0)
+          result.append(pprof)
         }
       }
+      state.pprofs = result
       state.synced = true
     }
   }

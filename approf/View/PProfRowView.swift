@@ -4,32 +4,11 @@ import SwiftUI
 
 struct PProfRowView: View {
   @Bindable var store: StoreOf<DetailFeature>
-  let running: Bool
   @State var hoveringOnButton = false
 
   var body: some View {
-    HStack {
-      textInfo()
-      Spacer()
-      if running {
-        ZStack {
-          if hoveringOnButton {
-            stopButton()
-          } else {
-            runningButton()
-          }
-        }
-        .onHover { h in
-          withAnimation {
-            hoveringOnButton = h
-          }
-        }
-      }
-    }
-    .padding(.horizontal, 8)
-    .padding(.vertical, 2)
-    .clipShape(RoundedRectangle(cornerRadius: 8))
-    .listRowInsets(.init(top: 0, leading: -6, bottom: 0, trailing: -6))
+    textInfo()
+      .contentShape(RoundedRectangle(cornerRadius: 8))
   }
 
   @ViewBuilder
@@ -57,30 +36,52 @@ struct PProfRowView: View {
 
   @ViewBuilder
   func textInfo() -> some View {
-    VStack(alignment: .leading, spacing: 2) {
-      Text(store.basic.computedName)
+    VStack(alignment: .leading, spacing: 4) {
+      Text(store.basic.computedName.forceCharWrapping)
         .font(.title3)
-//      HStack(alignment: .firstTextBaseline, spacing: 4) {
-//        if let size = size {
-//          Text("\(formattedSize(size))")
-//            .font(.system(size: 8))
-//            .foregroundStyle(.secondary)
-//        }
-//        if let type = type {
-//          Text("\(type)")
-//            .font(.caption)
-//            .foregroundStyle(.secondary)
-//            .padding(.horizontal, 2)
-//            .clipShape(RoundedRectangle(cornerRadius: 5))
-//            .clipped(antialiased: true)
-//        }
-//      }
-    }
-  }
+        .fontWeight(.semibold)
+        .lineLimit(2)
 
-  private func formattedSize(_ size: UInt64) -> String {
-    let byteCountFormatter = ByteCountFormatter()
-    byteCountFormatter.countStyle = .file
-    return byteCountFormatter.string(fromByteCount: Int64(size))
+      let count = store.basic.filePaths.count
+      HStack(alignment: .firstTextBaseline) {
+        if count > 1 {
+          HStack(alignment: .firstTextBaseline, spacing: 0) {
+            Image(systemName: "document")
+            Text("×\(count)")
+          }
+        }
+
+        if store.basic.presentation != .dft {
+          Text("\(store.basic.presentation)")
+        }
+
+        Spacer()
+
+        let date = store.basic.createdAt
+        if date.isToday() {
+          Text("Today \(date.formatted(date: .omitted, time: .shortened))")
+        } else {
+          Text("\(date.formatted(date: .abbreviated, time: .shortened))")
+        }
+
+        if store.isRunning {
+          ZStack {
+            if hoveringOnButton {
+              stopButton()
+            } else {
+              runningButton()
+            }
+          }
+          .onHover { h in
+            withAnimation {
+              hoveringOnButton = h
+            }
+          }
+        }
+      }
+      .font(.callout)
+      .foregroundStyle(.secondary)
+      .animation(.default, value: store.isRunning)
+    }
   }
 }

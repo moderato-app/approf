@@ -21,16 +21,19 @@ struct DetailView: View {
     .toolbar {
       if case .success = store.period {
         ToolbarItem(placement: .navigation) {
-          Button(action: {
-            store.send(.onSwitchViewButtonTapped, animation: .default)
-          }) {
-            Image(systemName: store.subViewType.systemImage)
+          Picker("", selection: $store.subViewType.sending(\.onSwitchViewChanged)) {
+            ForEach(DetailSubViewType.allCases, id: \.self) { c in
+              Text("\(c.rawValue)")
+            }
           }
-          .help(store.subViewType.help)
+          .pickerStyle(.segmented)
+          .labelsHidden()
+          .background(RoundedRectangle(cornerRadius: 6).fill(.thinMaterial))
         }
       }
     }
     .animation(.default, value: store.period)
+    .animation(.easeInOut(duration: 0.1), value: store.subViewType)
   }
 }
 

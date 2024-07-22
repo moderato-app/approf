@@ -23,15 +23,15 @@ struct AdaptiveForegroundColorModifier: ViewModifier {
 }
 
 extension View {
-    func foregroundColor(
-        light lightModeColor: Color,
-        dark darkModeColor: Color
-    ) -> some View {
-        modifier(AdaptiveForegroundColorModifier(
-            lightModeColor: lightModeColor,
-            darkModeColor: darkModeColor
-        ))
-    }
+//    func foregroundColor(
+//        light lightModeColor: Color,
+//        dark darkModeColor: Color
+//    ) -> some View {
+//        modifier(AdaptiveForegroundColorModifier(
+//            lightModeColor: lightModeColor,
+//            darkModeColor: darkModeColor
+//        ))
+//    }
 }
 
 

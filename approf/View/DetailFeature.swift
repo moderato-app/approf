@@ -25,7 +25,7 @@ struct DetailFeature {
     case period(PProfPeriod.Action)
     case uth(UnderTheHood.Action)
     case onAppear
-    case onSwitchViewButtonTapped
+    case onSwitchViewChanged(DetailSubViewType)
   }
 
   enum CancelID { case timer }
@@ -43,8 +43,8 @@ struct DetailFeature {
           return .send(.period(.launching(.start)))
         }
         return .none
-      case .onSwitchViewButtonTapped:
-        state.subViewType = state.subViewType.switchView()
+      case let .onSwitchViewChanged(t):
+        state.subViewType = t
         return .none
       case .uth(.delegate(.launchButtonTapped)),
            .period(.failure(.delegate(.launchButtonTapped))),
@@ -158,35 +158,15 @@ extension DetailFeature.State {
   }
 }
 
-extension DetailFeature.State {
-  enum DetailSubViewType: Codable, CaseIterable {
-    case underTheHood, graphic
+enum DetailSubViewType: String, Codable, CaseIterable {
+  case underTheHood = "Terminal", graphic = "WEB"
 
-    func switchView() -> Self {
-      switch self {
-      case .underTheHood:
-        .graphic
-      case .graphic:
-        .underTheHood
-      }
-    }
-
-    var systemImage: String {
-      switch self {
-      case .underTheHood:
-        "apple.terminal.fill"
-      case .graphic:
-        "apple.terminal"
-      }
-    }
-
-    var help: String {
-      switch self {
-      case .underTheHood:
-        "Toggle WEB view"
-      case .graphic:
-        "See what's under the hood"
-      }
+  func switchView() -> Self {
+    switch self {
+    case .underTheHood:
+      .graphic
+    case .graphic:
+      .underTheHood
     }
   }
 }

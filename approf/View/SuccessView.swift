@@ -21,10 +21,8 @@ struct SuccessView: View {
     // Adding a short delay to prevent a color flash. This only occurs the first time 'wk' displays.
     .opacity(store.fullyLoaded ? 1 : 0)
     .toolbar {
-      ToolbarItem(placement: .navigation) {
+      ToolbarItem(placement: .status) {
         LightsOnButton(lightsOn: $asm.lightsOn)
-          .padding(.horizontal, 10)
-          .padding(.vertical, 4)
           .help("Toggle Lights\nJust a simple color inversion in the app window, no CSS involved.")
           .opacity(store.fullyLoaded ? 1 : 0)
       }

@@ -45,13 +45,13 @@ struct FileRowView: View {
         Spacer()
         if isBase {
           Text("base")
-            .foregroundStyle(.black)
+            .foregroundStyle(.background)
             .padding(.horizontal, 6)
             .background(Rectangle().fill(.teal))
             .clipShape(RoundedRectangle(cornerRadius: 8))
         } else if ignored {
           Text("ignored")
-            .foregroundStyle(.black)
+            .foregroundStyle(.background)
             .padding(.horizontal, 6)
             .background(Rectangle().fill(.orange))
             .clipShape(RoundedRectangle(cornerRadius: 8))

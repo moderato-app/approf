@@ -52,6 +52,18 @@
 				<string>the.future.app.pprof.pprof.filetype.pb</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>pprof</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>the.future.app.pprof.pprof.filetype.pprof</string>
+			</array>
+		</dict>
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
@@ -71,6 +83,8 @@
 			<dict>
 				<key>UTTypeIconBadgeName</key>
 				<string>DocIcon</string>
+				<key>UTTypeIconText</key>
+				<string>pprof</string>
 			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>the.future.app.pprof.pprof.filetype.prof</string>
@@ -93,6 +107,8 @@
 			<dict>
 				<key>UTTypeIconBadgeName</key>
 				<string>DocIcon</string>
+				<key>UTTypeIconText</key>
+				<string>pprof</string>
 			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>the.future.app.pprof.pprof.filetype.proff</string>
@@ -115,6 +131,8 @@
 			<dict>
 				<key>UTTypeIconBadgeName</key>
 				<string>DocIcon</string>
+				<key>UTTypeIconText</key>
+				<string>pprof</string>
 			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>the.future.app.pprof.pprof.filetype.pb</string>
@@ -123,6 +141,30 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>pb</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>google pprof file format - pprof</string>
+			<key>UTTypeIcons</key>
+			<dict>
+				<key>UTTypeIconBadgeName</key>
+				<string>DocIcon</string>
+				<key>UTTypeIconText</key>
+				<string>pprof</string>
+			</dict>
+			<key>UTTypeIdentifier</key>
+			<string>the.future.app.pprof.pprof.filetype.pprof</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pprof</string>
 				</array>
 			</dict>
 		</dict>

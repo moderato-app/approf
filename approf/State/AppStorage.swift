@@ -3,7 +3,7 @@ import SwiftUI
 class AppStorageManager: ObservableObject {
   static var shared = AppStorageManager()
   // Appearance
-  @AppStorage("colorScheme") var colorScheme = AppColorScheme.automatic
+  @AppStorage("colorScheme") var colorScheme = AppColorScheme.dark
   @AppStorage("lightsOn") var lightsOn = true
   @AppStorage("materialType") var materialType = MaterialType.ultraThin
 

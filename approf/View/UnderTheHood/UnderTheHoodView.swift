@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import PopupView
 import SwiftUI
 
 struct UnderTheHoodView: View {
@@ -30,6 +31,13 @@ struct UnderTheHoodView: View {
     }
     .toolbar {
       //      toolbar()
+    }
+    .popup(item: $store.scope(state: \.destination?.notification, action: \.destination.notification), itemView: { notiStore in
+      NotificationView(store: notiStore)
+    }) {
+      $0.type(.floater())
+        .position(.bottomTrailing)
+        .animation(.spring())
     }
   }
   
@@ -67,8 +75,11 @@ struct UnderTheHoodView: View {
               delayReadingFile: Duration.milliseconds(100 + 50 * (store.basic.filePaths.firstIndex { $0 == filePath } ?? 2))
             )
             .contextMenu {
-              Button("Delete", systemImage: "trash", role: .destructive) {
+              Button(action: {
                 store.send(.onDeleteMenuTapped(filePath), animation: .default)
+              }) {
+                Text("Delete").foregroundStyle(.red)
+                  + Text("    ⌘⌫").foregroundStyle(.secondary)
               }
             }
           }
@@ -206,10 +217,12 @@ struct UnderTheHoodView: View {
       Button("Launch") {
         store.send(.delegate(.launchButtonTapped))
       }
+      .buttonStyle(BorderedProminentButtonStyle())
     case .failure:
       Button("Relaunch") {
         store.send(.delegate(.launchButtonTapped))
       }
+      .buttonStyle(BorderedProminentButtonStyle())
     case .success:
       Button("Stop") {
         store.send(.delegate(.stopButtonTapped))

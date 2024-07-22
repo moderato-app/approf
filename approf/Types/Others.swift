@@ -5,6 +5,7 @@ let profTypes = [
   UTType("the.future.app.pprof.pprof.filetype.pb")!,
   UTType("the.future.app.pprof.pprof.filetype.prof")!,
   UTType("the.future.app.pprof.pprof.filetype.proff")!,
+  UTType("the.future.app.pprof.pprof.filetype.pprof")!
 ]
 
 enum PProfError: Error {

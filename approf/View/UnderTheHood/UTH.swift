@@ -3,13 +3,20 @@ import Foundation
 
 @Reducer
 struct UnderTheHood {
+  @Reducer(state: .equatable)
+  enum Destination {
+    case notification(NotificationFeature)
+  }
+
   @ObservableState
   struct State: Equatable {
     @Shared var basic: PProfBasic
     var selection: String?
+    @Presents var destination: Destination.State?
   }
 
   enum Action {
+    case destination(PresentationAction<Destination.Action>)
     case onSelectionChanged(String?)
     case onPresentationChanged(PProfPresentation)
     case onSelectFilesEnd([String])
@@ -21,9 +28,11 @@ struct UnderTheHood {
     case onMoveDownCommand
     case onNextPresentationCommand
     case onPrevPresentationCommand
+    case newNotification(String)
+    case newCountDownNotification(String, UInt)
 
     case delegate(Delegate)
-    
+
     @CasePathable
     enum Delegate {
       case onCancelImportButtonTapped
@@ -37,7 +46,7 @@ struct UnderTheHood {
   var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
-      case .delegate:
+      case .delegate, .destination:
         return .none
       case let .onPresentationChanged(p):
         changePresentation(&state, p)
@@ -75,8 +84,15 @@ struct UnderTheHood {
       case .onPrevPresentationCommand:
         state.basic.presentation = state.basic.presentation.prev
         return .none
+      case let .newNotification(text):
+        state.destination = .notification(.init(text: text))
+        return .none
+      case let .newCountDownNotification(text, seconds):
+        state.destination = .notification(.init(text: text, seconds: seconds))
+        return .none
       }
     }
+    .ifLet(\.$destination, action: \.destination)
   }
 
   private func changePresentation(_ state: inout Self.State, _ presentation: PProfPresentation) {
@@ -92,10 +108,17 @@ struct UnderTheHood {
   }
 
   private func addFiles(_ state: inout Self.State, filePaths: [String]) {
+    var dup = 0
     for fp in filePaths {
-      if !state.basic.filePaths.contains(fp) {
+      if state.basic.filePaths.contains(fp) {
+        dup += 1
+      } else {
         state.basic.filePaths.append(fp)
       }
+    }
+
+    if dup > 0 {
+      return state.destination = .notification(.init(text: "\(dup) duplicate files ignored", seconds: 5))
     }
   }
 
