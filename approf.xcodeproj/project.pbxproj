@@ -65,7 +65,6 @@
 		EBB794882C41146000D5AE1C /* PProfRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB794872C41146000D5AE1C /* PProfRowView.swift */; };
 		EBD20FBD2C42D06300EE88D7 /* LightsOff.metal in Sources */ = {isa = PBXBuildFile; fileRef = EBD20FBC2C42D06300EE88D7 /* LightsOff.metal */; };
 		EBD292B42C430F8000FFB285 /* ShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD292B32C430F8000FFB285 /* ShortcutView.swift */; };
-		EBD292B82C430F9700FFB285 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = EBD292B72C430F9700FFB285 /* Sparkle */; };
 		EBD292BA2C430F9700FFB285 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = EBD292B92C430F9700FFB285 /* KeyboardShortcuts */; };
 		EBD292BC2C43116400FFB285 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD292BB2C43116400FFB285 /* SettingView.swift */; };
 		EBD292BF2C43168100FFB285 /* Pow in Frameworks */ = {isa = PBXBuildFile; productRef = EBD292BE2C43168100FFB285 /* Pow */; };
@@ -200,7 +199,6 @@
 			files = (
 				EB1003E72C4A7EFC009E61F2 /* PopupView in Frameworks */,
 				EBD292BF2C43168100FFB285 /* Pow in Frameworks */,
-				EBD292B82C430F9700FFB285 /* Sparkle in Frameworks */,
 				EBD292BA2C430F9700FFB285 /* KeyboardShortcuts in Frameworks */,
 				EBB1899D2C430AD00037A8F4 /* ComposableArchitecture in Frameworks */,
 				EBEF3C0B2C3BBF2A0003477D /* Logging in Frameworks */,
@@ -470,7 +468,6 @@
 			packageProductDependencies = (
 				EBEF3C0A2C3BBF2A0003477D /* Logging */,
 				EBB1899C2C430AD00037A8F4 /* ComposableArchitecture */,
-				EBD292B72C430F9700FFB285 /* Sparkle */,
 				EBD292B92C430F9700FFB285 /* KeyboardShortcuts */,
 				EBD292BE2C43168100FFB285 /* Pow */,
 				EB1003E62C4A7EFC009E61F2 /* PopupView */,
@@ -549,7 +546,6 @@
 			packageReferences = (
 				EBEF3C072C3BBEF80003477D /* XCRemoteSwiftPackageReference "swift-log" */,
 				EB3BC5B92C430A6700C9920F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				EBD292B02C430D2B00FFB285 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				EBD292B12C430D5800FFB285 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				EBD292BD2C43151A00FFB285 /* XCRemoteSwiftPackageReference "Pow" */,
 				EB1003E52C4A7EEC009E61F2 /* XCRemoteSwiftPackageReference "PopupView" */,
@@ -1005,14 +1001,6 @@
 				minimumVersion = 1.12.0;
 			};
 		};
-		EBD292B02C430D2B00FFB285 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.4;
-			};
-		};
 		EBD292B12C430D5800FFB285 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
@@ -1049,11 +1037,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EB3BC5B92C430A6700C9920F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
-		};
-		EBD292B72C430F9700FFB285 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EBD292B02C430D2B00FFB285 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
 		};
 		EBD292B92C430F9700FFB285 /* KeyboardShortcuts */ = {
 			isa = XCSwiftPackageProductDependency;
