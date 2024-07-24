@@ -173,7 +173,7 @@ struct LaunchingFeature {
       case let .launchingTimeout(timeout):
         if timeout > 0 {
           return .run { send in
-            try await Task.sleep(for: .seconds(timeout))
+            try await self.clock.sleep(for: .seconds(timeout))
             await send(.launchingTimeout(0))
           }
           .cancellable(id: CancelID.timer)

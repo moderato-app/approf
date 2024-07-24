@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-struct DropFeature: Equatable {
+struct DropFeature {
   @Reducer(state: .equatable)
   enum Destination {
     case importing(ImportFeature)
@@ -29,6 +29,8 @@ struct DropFeature: Equatable {
     }
   }
 
+  @Dependency(\.continuousClock) var clock
+
   var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
@@ -47,9 +49,9 @@ struct DropFeature: Equatable {
         } else if filePaths.count == 1 {
           let basic = PProfBasic(filePaths: filePaths, presentation: .dft)
           return .run { send in
-            try await Task.sleep(for: .seconds(0.1))
+            try await clock.sleep(for: .seconds(0.1))
             await send(.delegate(.addNewBasic(basic)), animation: .default)
-            try await Task.sleep(for: .seconds(0.1))
+            try await clock.sleep(for: .seconds(0.1))
             await send(.delegate(.selectPProf(basic.id)), animation: .default)
           }
         } else if filePaths.count == 2 {
@@ -71,11 +73,11 @@ struct DropFeature: Equatable {
           let filePaths = importingFeature.basic.filePaths
           return .run { send in
             for fp in filePaths.reversed() {
-              try await Task.sleep(for: .seconds(0.03))
+              try await clock.sleep(for: .seconds(0.03))
               let basic = PProfBasic(filePaths: [fp], presentation: .dft)
               await send(.delegate(.addNewBasic(basic)), animation: .default)
               if fp == filePaths.first {
-                try await Task.sleep(for: .seconds(0.03))
+                try await clock.sleep(for: .seconds(0.03))
                 await send(.delegate(.selectPProf(basic.id)), animation: .default)
               }
             }
@@ -83,9 +85,9 @@ struct DropFeature: Equatable {
         } else {
           let basic = PProfBasic(filePaths: importingFeature.basic.filePaths, presentation: importingFeature.basic.presentation)
           return .run { send in
-            try await Task.sleep(for: .seconds(0.03))
+            try await clock.sleep(for: .seconds(0.03))
             await send(.delegate(.addNewBasic(basic)), animation: .default)
-            try await Task.sleep(for: .seconds(0.03))
+            try await clock.sleep(for: .seconds(0.03))
             await send(.delegate(.selectPProf(basic.id)), animation: .default)
           }
         }

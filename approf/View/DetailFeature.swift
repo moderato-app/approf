@@ -29,6 +29,7 @@ struct DetailFeature {
   }
 
   enum CancelID { case timer }
+  @Dependency(\.continuousClock) var clock
 
   var body: some ReducerOf<Self> {
     Scope(state: \.uth, action: \.uth) {
@@ -68,7 +69,7 @@ struct DetailFeature {
             await wk.load(URLRequest(url: URL(string: "http://localhost:\(portReady)")!))
           },
           .run { send in
-            try await Task.sleep(for: .seconds(0.3))
+            try await self.clock.sleep(for: .seconds(0.3))
             await send(.period(.success(.onFullyLoaded)), animation: .default)
           }
         )
