@@ -1,5 +1,5 @@
-import SwiftUI
 import Pow
+import SwiftUI
 
 struct CopyButton: View {
   let textGenerator: () -> String
@@ -8,7 +8,7 @@ struct CopyButton: View {
   init(textGenerator: @escaping () -> String) {
     self.textGenerator = textGenerator
   }
-  
+
   var body: some View {
     Button(action: {
       let pasteboard = NSPasteboard.general
@@ -23,15 +23,17 @@ struct CopyButton: View {
         }
       }
     }) {
-      if clicked {
-        Image(systemName: "checkmark.circle")
-          .foregroundStyle(.green)
-          .transition(
-            .movingParts.pop(.green)
-          )
-      } else {
-        Image(systemName: icon)
-      }
+      Image(systemName: icon)
+        .opacity(clicked ? 0 : 1)
+        .overlay {
+          if clicked {
+            Image(systemName: "checkmark.circle")
+              .foregroundStyle(.green)
+              .transition(
+                .movingParts.pop(.green)
+              )
+          }
+        }
     }
     .buttonStyle(PlainButtonStyle())
   }
