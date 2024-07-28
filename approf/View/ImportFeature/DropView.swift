@@ -18,6 +18,7 @@ struct DropView: View {
         if store.dropping {
           GradientBackgroundAnimation()
             .ignoresSafeArea()
+            .toolbar(.hidden, for: .windowToolbar)
         }
       }
       .onDrop(of: profTypes, delegate: DropFileDelegate(store: store))
