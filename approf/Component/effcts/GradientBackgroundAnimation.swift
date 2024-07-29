@@ -56,6 +56,10 @@ struct GradientBackgroundAnimation: View {
             animateGradient.toggle()
           }
         }
+//          .reverseMask {
+//            RoundedRectangle(cornerRadius: 10)
+//              .padding(6)
+//          }
     }
     .delayedHover(5) { h in
       withAnimation {
@@ -67,6 +71,8 @@ struct GradientBackgroundAnimation: View {
         showFullContent = h
       }
     }
+    .ignoresSafeArea()
+    .toolbar(.hidden, for: .windowToolbar)
   }
 }
 
