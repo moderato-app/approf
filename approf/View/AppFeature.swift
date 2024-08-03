@@ -81,6 +81,9 @@ struct AppFeature {
       case .onCloseTabCommand:
         state.pprofsSelectedId = nil
         return .none
+      case let .pprofs(.element(id: id, action: .delegate(.onPprofsSelectedIdChanged))):
+        state.pprofsSelectedId = id
+        return .none
       case .pprofs:
         return .none
       case let .drop(.delegate(.addNewBasic(basic))):

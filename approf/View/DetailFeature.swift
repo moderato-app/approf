@@ -26,6 +26,14 @@ struct DetailFeature {
     case uth(UnderTheHood.Action)
     case onAppear
     case onSwitchViewChanged(DetailSubViewType)
+    case onStartButtonTapped
+
+    case delegate(Delegate)
+
+    @CasePathable
+    enum Delegate: Equatable {
+      case onPprofsSelectedIdChanged
+    }
   }
 
   enum CancelID { case timer }
@@ -38,12 +46,19 @@ struct DetailFeature {
 
     Reduce { state, action in
       switch action {
-      case .onAppear:
-        if case .idle = state.period {
-          state.period = .launching(LaunchingFeature.State(basic: state.$basic))
-          return .send(.period(.launching(.start)))
-        }
+      case .delegate, .onAppear:
         return .none
+      case .onStartButtonTapped:
+        switch state.period {
+        case .idle, .terminated:
+          state.period = .launching(LaunchingFeature.State(basic: state.$basic))
+          return .merge(
+            .send(.period(.launching(.start))),
+            .send(.delegate(.onPprofsSelectedIdChanged))
+          )
+        default:
+          return .none
+        }
       case let .onSwitchViewChanged(t):
         state.subViewType = t
         return .none
@@ -63,7 +78,7 @@ struct DetailFeature {
         let wk = WKWebView(frame: .zero, configuration: conf)
         wk.layer?.borderWidth = 0
         state.period = .success(.init(basic: state.$basic, process: process, port: portReady, wk: wk))
-        if goToWEB{
+        if goToWEB {
           state.subViewType = .graphic
         }
         return .merge(

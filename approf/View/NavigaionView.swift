@@ -10,15 +10,8 @@ struct NavigaionView: View {
       List(store.scope(state: \.pprofs, action: \.pprofs),
            selection: $store.pprofsSelectedId.sending(\.onPprofsSelectedIdChanged))
       { pprofStore in
-        PProfRowView(store: pprofStore)
-          .contextMenu {
-            Button(action: {
-              store.send(.deleteButtonTapped(pprofStore.id))
-            }) {
-              Text("Delete").foregroundStyle(.red)
-                + Text("    ⌘⇧+⌫").foregroundStyle(.secondary)
-            }
-          }
+        PProfRowView(store: pprofStore, selected: store.pprofsSelectedId == pprofStore.id)
+          .contextMenu { rowContextMenu(pprofUUID: pprofStore.id) }
           .tag(pprofStore.basic.id)
           .listRowSeparator(.visible)
           .listRowSeparatorTint(.secondary.opacity(0.5))
@@ -41,6 +34,16 @@ struct NavigaionView: View {
     .animation(.easeInOut(duration: 0.2), value: store.pprofsSelectedId)
     .onAppear {
       store.send(.onAppear)
+    }
+  }
+
+  @ViewBuilder
+  private func rowContextMenu(pprofUUID: UUID) -> some View {
+    Button(action: {
+      store.send(.deleteButtonTapped(pprofUUID))
+    }) {
+      Text("Delete").foregroundStyle(.red)
+        + Text("    ⌘⇧+⌫").foregroundStyle(.secondary)
     }
   }
 

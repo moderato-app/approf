@@ -4,11 +4,65 @@ import SwiftUI
 
 struct PProfRowView: View {
   @Bindable var store: StoreOf<DetailFeature>
-  @State var hoveringOnButton = false
+  var selected: Bool = false
+  @State var hoveringOnStatusButton = false
+  @State var startButtonWidth = 0.0
+  @State var startButtonXOffset = 200.0
 
   var body: some View {
-    textInfo()
+    row()
       .contentShape(RoundedRectangle(cornerRadius: 8))
+      .overlay(alignment: .trailing) {
+        startButton()
+          .onGeometryChange(for: CGFloat.self) { proxy in proxy.size.width } action: { width in startButtonWidth = width }
+          .offset(x: startButtonXOffset)
+      }
+      .onHover { h in
+        if !selected, h {
+          switch store.period {
+          case .idle, .terminated:
+            withAnimation(.bouncy) {
+              showStartButton()
+            }
+            return
+          default:
+            _ = 0
+          }
+        }
+        hideStartButton()
+      }
+  }
+
+  func hideStartButton() {
+    withAnimation(.bouncy) {
+      startButtonXOffset = startButtonWidth + 50
+    }
+  }
+  
+  func showStartButton() {
+    withAnimation(.bouncy) {
+      startButtonXOffset = 0
+    }
+  }
+
+  @ViewBuilder
+  func startButton() -> some View {
+    Button(action: {
+      store.send(.onStartButtonTapped)
+      hideStartButton()
+    }) {
+      Rectangle()
+        .fill(.tint)
+        .aspectRatio(1, contentMode: .fit)
+        .overlay {
+          Image(systemName: "restart")
+            .resizable()
+            .scaledToFit()
+            .foregroundStyle(.white)
+            .containerRelativeFrame(.vertical) { v, _ in v * 0.4 }
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }.buttonStyle(.plain)
   }
 
   @ViewBuilder
@@ -16,9 +70,7 @@ struct PProfRowView: View {
     Image(systemName: "circle.fill")
       .foregroundStyle(.green)
       .scaleEffect(0.4)
-      .transition(.movingParts.iris(
-        blurRadius: 50
-      ))
+      .transition(.movingParts.iris(blurRadius: 50))
   }
 
   @ViewBuilder
@@ -35,7 +87,7 @@ struct PProfRowView: View {
   }
 
   @ViewBuilder
-  func textInfo() -> some View {
+  func row() -> some View {
     VStack(alignment: .leading, spacing: 4) {
       Text(store.basic.computedName.forceCharWrapping)
         .font(.title3)
@@ -66,7 +118,7 @@ struct PProfRowView: View {
 
         if store.isRunning {
           ZStack {
-            if hoveringOnButton {
+            if hoveringOnStatusButton {
               stopButton()
             } else {
               runningButton()
@@ -74,7 +126,7 @@ struct PProfRowView: View {
           }
           .onHover { h in
             withAnimation {
-              hoveringOnButton = h
+              hoveringOnStatusButton = h
             }
           }
         }

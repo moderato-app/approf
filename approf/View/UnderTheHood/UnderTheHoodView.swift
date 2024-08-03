@@ -74,10 +74,8 @@ struct UnderTheHoodView: View {
               isBase: store.basic.presentation == .diff && filePath == store.basic.filePaths.first,
               delayReadingFile: Duration.milliseconds(100 + 50 * (store.basic.filePaths.firstIndex { $0 == filePath } ?? 2))
             )
-            .background {
-              // for commands to work
+            .addHiddenView {
               rowContextMenu(filePath: filePath, deleteDisabled: store.basic.filePaths.count == 1)
-                .frame(width: 1, height: 1).opacity(0).allowsHitTesting(false)
             }
             .contextMenu {
               rowContextMenu(filePath: filePath, deleteDisabled: store.basic.filePaths.count == 1)
@@ -227,9 +225,7 @@ struct UnderTheHoodView: View {
   @ViewBuilder
   private func actionButton() -> some View {
     switch periodStatus {
-    case .idle:
-      EmptyView()
-    case .terminated:
+    case .idle, .terminated:
       Button("Launch") {
         store.send(.delegate(.launchButtonTapped))
       }
