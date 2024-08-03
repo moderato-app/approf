@@ -28,7 +28,7 @@ struct LaunchingFeature {
     
     @CasePathable
     enum Delegate: Equatable {
-      case onSuccess(Process, UInt16)
+      case onSuccess(Process, UInt16, Bool) // goToWEB: Bool
       case onFailed(FailureFeature.Cause)
       case onTermimated
     }
@@ -165,7 +165,7 @@ struct LaunchingFeature {
             .cancel(id: CancelID.timer),
             .cancel(id: CancelID.httpDetector),
             .cancel(id: CancelID.terminalReader),
-            .send(.delegate(.onSuccess(process, port)))
+            .send(.delegate(.onSuccess(process, port, false)))
           )
         } else {
           return .send(.fail(.process("failed: let process = state.process, let port = state.portReady")))

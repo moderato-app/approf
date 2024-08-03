@@ -74,13 +74,13 @@ struct UnderTheHoodView: View {
               isBase: store.basic.presentation == .diff && filePath == store.basic.filePaths.first,
               delayReadingFile: Duration.milliseconds(100 + 50 * (store.basic.filePaths.firstIndex { $0 == filePath } ?? 2))
             )
+            .background {
+              // for commands to work
+              rowContextMenu(filePath: filePath, deleteDisabled: store.basic.filePaths.count == 1)
+                .frame(width: 1, height: 1).opacity(0).allowsHitTesting(false)
+            }
             .contextMenu {
-              Button(action: {
-                store.send(.onDeleteMenuTapped(filePath), animation: .default)
-              }) {
-                Text("Delete").foregroundStyle(.red)
-                  + Text("    ⌘⌫").foregroundStyle(.secondary)
-              }
+              rowContextMenu(filePath: filePath, deleteDisabled: store.basic.filePaths.count == 1)
             }
           }
           .onMove { from, to in
@@ -109,7 +109,7 @@ struct UnderTheHoodView: View {
           .contentShape(Rectangle())
           
           Divider().frame(height: 14)
-          Button(action: { store.send(.onDeleteCommand) }) {
+          Button(action: { store.send(.onDeleteSelectedCommand) }) {
             Image(systemName: "rectangle.fill")
               .opacity(0.001)
               .overlay {
@@ -162,6 +162,22 @@ struct UnderTheHoodView: View {
         }
       }
     }
+  }
+  
+  @ViewBuilder
+  private func rowContextMenu(filePath: String, deleteDisabled: Bool) -> some View {
+    Button("Show in Finder") {
+      NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: filePath)])
+    }
+    .keyboardShortcut("j", modifiers: [.command, .shift])
+    Button(action: {
+      store.send(.onDeleteMenuTapped(filePath), animation: .default)
+    }) {
+      Text("Delete").foregroundStyle(.red)
+    }
+    .foregroundStyle(.red)
+    .keyboardShortcut(.delete, modifiers: [.command])
+    .disabled(deleteDisabled)
   }
   
   @ViewBuilder
@@ -224,8 +240,16 @@ struct UnderTheHoodView: View {
       }
       .buttonStyle(BorderedProminentButtonStyle())
     case .success:
-      Button("Stop") {
-        store.send(.delegate(.stopButtonTapped))
+      HStack(alignment: .firstTextBaseline) {
+        Button("Stop") {
+          store.send(.delegate(.stopButtonTapped))
+        }
+        Button("go to web") {
+          store.send(.delegate(.goToWEBButtonTapped))
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(.tint)
+        .fontDesign(.rounded)
       }
     case .launching:
       Button("Cancel") {
@@ -240,9 +264,6 @@ struct UnderTheHoodView: View {
       .fill(.clear)
       .frame(width: 1, height: 1)
       .allowsHitTesting(false)
-      .sc(.delete, modifiers: [.command]) {
-        store.send(.onDeleteCommand, animation: .default)
-      }
       .sc(.upArrow, modifiers: [.command, .shift]) {
         store.send(.onMoveUpCommand, animation: .default)
       }

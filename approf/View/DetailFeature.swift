@@ -54,7 +54,7 @@ struct DetailFeature {
         self.cleanUp(state: &state)
         state.period = .launching(LaunchingFeature.State(basic: state.$basic))
         return .send(.period(.launching(.start)))
-      case let .period(.launching(.delegate(.onSuccess(process, portReady)))):
+      case let .period(.launching(.delegate(.onSuccess(process, portReady, goToWEB)))):
         let conf = WKWebViewConfiguration()
         conf.defaultWebpagePreferences.allowsContentJavaScript = true
         conf.allowsAirPlayForMediaPlayback = false
@@ -63,7 +63,9 @@ struct DetailFeature {
         let wk = WKWebView(frame: .zero, configuration: conf)
         wk.layer?.borderWidth = 0
         state.period = .success(.init(basic: state.$basic, process: process, port: portReady, wk: wk))
-        state.subViewType = .graphic
+        if goToWEB{
+          state.subViewType = .graphic
+        }
         return .merge(
           .run { _ in
             await wk.load(URLRequest(url: URL(string: "http://localhost:\(portReady)")!))
@@ -81,6 +83,9 @@ struct DetailFeature {
           .send(.period(.launching(.stop))),
           .send(.period(.success(.stop)))
         )
+      case .uth(.delegate(.goToWEBButtonTapped)):
+        state.subViewType = .graphic
+        return .none
       case .period(.launching(.delegate(.onTermimated))),
            .period(.success(.delegate(.onTermimated))):
         state.period = .terminated(.init())

@@ -22,7 +22,7 @@ struct UnderTheHood {
     case onSelectFilesEnd([String])
 
     case onMove(from: IndexSet, to: Int)
-    case onDeleteCommand
+    case onDeleteSelectedCommand
     case onDeleteMenuTapped(String)
     case onMoveUpCommand
     case onMoveDownCommand
@@ -40,6 +40,7 @@ struct UnderTheHood {
 
       case launchButtonTapped
       case stopButtonTapped
+      case goToWEBButtonTapped
     }
   }
 
@@ -60,7 +61,7 @@ struct UnderTheHood {
       case let .onMove(from, to):
         move(&state, from, to)
         return .none
-      case .onDeleteCommand:
+      case .onDeleteSelectedCommand:
         if let selection = state.selection {
           delete(&state, selection)
         }
