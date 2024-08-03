@@ -43,8 +43,8 @@ struct NavigaionView: View {
       store.send(.deleteButtonTapped(pprofUUID))
     }) {
       Text("Delete").foregroundStyle(.red)
-        + Text("    ⌘⇧+⌫").foregroundStyle(.secondary)
     }
+    .keyboardShortcut(.delete, modifiers: [.command, .shift])
   }
 
   @ViewBuilder

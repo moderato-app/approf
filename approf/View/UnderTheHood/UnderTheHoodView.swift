@@ -165,7 +165,7 @@ struct UnderTheHoodView: View {
   @ViewBuilder
   private func rowContextMenu(filePath: String, deleteDisabled: Bool) -> some View {
     Button("Show in Finder") {
-      NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: filePath)])
+      showInFinder(filePath)
     }
     .keyboardShortcut("j", modifiers: [.command, .shift])
     Button(action: {

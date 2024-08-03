@@ -1,13 +1,14 @@
 import ComposableArchitecture
-import Pow
 import SwiftUI
 
 struct PProfRowView: View {
   @Bindable var store: StoreOf<DetailFeature>
   var selected: Bool = false
+
   @State var hoveringOnStatusButton = false
+
+  @State var hoveringOnRow = false
   @State var startButtonWidth = 0.0
-  @State var startButtonXOffset = 200.0
 
   var body: some View {
     row()
@@ -16,40 +17,29 @@ struct PProfRowView: View {
         startButton()
           .onGeometryChange(for: CGFloat.self) { proxy in proxy.size.width } action: { width in startButtonWidth = width }
           .offset(x: startButtonXOffset)
+          .animation(.bouncy, value: startButtonXOffset)
       }
       .onHover { h in
-        if !selected, h {
-          switch store.period {
-          case .idle, .terminated:
-            withAnimation(.bouncy) {
-              showStartButton()
-            }
-            return
-          default:
-            _ = 0
-          }
-        }
-        hideStartButton()
+        hoveringOnRow = h
       }
   }
 
-  func hideStartButton() {
-    withAnimation(.bouncy) {
-      startButtonXOffset = startButtonWidth + 50
+  var startButtonXOffset: CGFloat {
+    if !selected, hoveringOnRow {
+      switch store.period {
+      case .idle, .terminated:
+        return 0
+      default:
+        return startButtonWidth + 50
+      }
     }
-  }
-  
-  func showStartButton() {
-    withAnimation(.bouncy) {
-      startButtonXOffset = 0
-    }
+    return startButtonWidth + 50
   }
 
   @ViewBuilder
   func startButton() -> some View {
     Button(action: {
       store.send(.onStartButtonTapped)
-      hideStartButton()
     }) {
       Rectangle()
         .fill(.tint)
