@@ -51,7 +51,7 @@ struct DetailFeature {
       case .onStartButtonTapped:
         switch state.period {
         case .idle, .terminated:
-          state.period = .launching(LaunchingFeature.State(basic: state.$basic))
+          state.period = .launching(LaunchingFeature.State(basic: state.$basic, goToWebOnSuccess: true))
           return .merge(
             .send(.period(.launching(.start))),
             .send(.delegate(.onPprofsSelectedIdChanged))

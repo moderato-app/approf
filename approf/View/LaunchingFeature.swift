@@ -11,6 +11,8 @@ struct LaunchingFeature {
     var portReady: UInt16?
     var detectingHttp = false
     var httpReady = false
+    
+    var goToWebOnSuccess = false
   }
   
   enum Action {
@@ -165,7 +167,7 @@ struct LaunchingFeature {
             .cancel(id: CancelID.timer),
             .cancel(id: CancelID.httpDetector),
             .cancel(id: CancelID.terminalReader),
-            .send(.delegate(.onSuccess(process, port, false)))
+            .send(.delegate(.onSuccess(process, port, state.goToWebOnSuccess)))
           )
         } else {
           return .send(.fail(.process("failed: let process = state.process, let port = state.portReady")))
