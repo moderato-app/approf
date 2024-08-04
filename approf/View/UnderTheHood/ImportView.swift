@@ -6,10 +6,8 @@ struct ImportView: View {
 
   var body: some View {
     VStack(spacing: 20) {
-      FileListView(store: store, importing: true)
-        .containerRelativeFrame(.vertical) { y, _ in y * 0.6 }
-      Spacer()
-      CommandPreviewView(store: store, importing: true)
+      FileListView(store: store)
+      CommandPreviewView(store: store)
       Spacer()
     }
     .background {
@@ -22,7 +20,7 @@ struct ImportView: View {
       store.send(.delegate(.onImportViewAutoDismissed))
     }
   }
-
+  
   @ToolbarContentBuilder
   private func toolbar() -> some ToolbarContent {
     ToolbarItem(placement: .destructiveAction) {
@@ -42,7 +40,7 @@ struct ImportView: View {
 struct ImportViewV2App: App {
   var body: some Scene {
     WindowGroup {
-      ImportView(store: UnderTheHood.mock)
+      ImportViewV2(store: UnderTheHood.mock)
     }
   }
 }

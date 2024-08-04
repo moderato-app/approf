@@ -5,7 +5,7 @@ import Foundation
 struct DropFeature {
   @Reducer(state: .equatable)
   enum Destination {
-    case importing(ImportFeature)
+    case uth(UnderTheHood)
   }
 
   @ObservableState
@@ -55,22 +55,22 @@ struct DropFeature {
             await send(.delegate(.selectPProf(basic.id)), animation: .default)
           }
         } else if filePaths.count == 2 {
-          state.destination = .importing(ImportFeature.State(basic: Shared(PProfBasic(filePaths: filePaths, presentation: .diff))))
+          state.destination = .uth(UnderTheHood.State(basic: Shared(PProfBasic(filePaths: filePaths, presentation: .diff))))
           return .none
         } else {
-          state.destination = .importing(ImportFeature.State(basic: Shared(PProfBasic(filePaths: filePaths, presentation: .acc))))
+          state.destination = .uth(UnderTheHood.State(basic: Shared(PProfBasic(filePaths: filePaths, presentation: .acc))))
           return .none
         }
-      case .destination(.presented(.importing(.delegate(.onCancelImportButtonTapped)))), .destination(.presented(.importing(.delegate(.onImportViewAutoDismissed)))):
+      case .destination(.presented(.uth(.delegate(.onCancelImportButtonTapped)))), .destination(.presented(.uth(.delegate(.onImportViewAutoDismissed)))):
         state.destination = nil
         return .none
-      case .destination(.presented(.importing(.delegate(.onConfirmImportButtonTapped)))):
-        guard case let .importing(importingFeature) = state.destination else {
+      case .destination(.presented(.uth(.delegate(.onConfirmImportButtonTapped)))):
+        guard case let .uth(uthFeature) = state.destination else {
           return .none
         }
         state.destination = nil
-        if case .dft = importingFeature.basic.presentation {
-          let filePaths = importingFeature.basic.filePaths
+        if case .dft = uthFeature.basic.presentation {
+          let filePaths = uthFeature.basic.filePaths
           return .run { send in
             for fp in filePaths.reversed() {
               try await clock.sleep(for: .seconds(0.03))
@@ -83,7 +83,7 @@ struct DropFeature {
             }
           }
         } else {
-          let basic = PProfBasic(filePaths: importingFeature.basic.filePaths, presentation: importingFeature.basic.presentation)
+          let basic = PProfBasic(filePaths: uthFeature.basic.filePaths, presentation: uthFeature.basic.presentation)
           return .run { send in
             try await clock.sleep(for: .seconds(0.03))
             await send(.delegate(.addNewBasic(basic)), animation: .default)

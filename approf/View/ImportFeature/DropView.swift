@@ -21,9 +21,10 @@ struct DropView: View {
       }
       .onDrop(of: profTypes, delegate: DropFileDelegate(store: store))
       .sheet(
-        item: $store.scope(state: \.destination?.importing, action: \.destination.importing)
+        item: $store.scope(state: \.destination?.uth, action: \.destination.uth)
       ) { importingStore in
         ImportView(store: importingStore)
+          .padding(20)
           .frame(width: viewSize.width * 0.7, height: viewSize.height * 0.8)
           .presentationCornerRadius(20)
           .presentationBackgroundInteraction(.disabled)
@@ -40,7 +41,7 @@ class DropFileDelegate: DropDelegate {
   }
 
   func validateDrop(info: DropInfo) -> Bool {
-    if case .importing = store.destination {
+    if case .uth = store.destination {
       return false
     }
     return true

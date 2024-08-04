@@ -35,12 +35,14 @@ struct UnderTheHood {
 
     @CasePathable
     enum Delegate {
-      case onCancelImportButtonTapped
-      case onConfirmImportButtonTapped
-
       case launchButtonTapped
       case stopButtonTapped
       case goToWEBButtonTapped
+
+      // MARK: for import view
+      case onImportViewAutoDismissed
+      case onCancelImportButtonTapped
+      case onConfirmImportButtonTapped
     }
   }
 
