@@ -1,4 +1,3 @@
-import AppKit
 import ComposableArchitecture
 import SwiftUI
 
@@ -7,33 +6,39 @@ struct NavigaionView: View {
 
   var body: some View {
     NavigationSplitView {
-      List(store.scope(state: \.pprofs, action: \.pprofs),
-           selection: $store.pprofsSelectedId.sending(\.onPprofsSelectedIdChanged))
-      { pprofStore in
-        PProfRowView(store: pprofStore, selected: store.pprofsSelectedId == pprofStore.id)
-          .contextMenu { rowContextMenu(pprofUUID: pprofStore.id) }
-          .tag(pprofStore.basic.id)
-          .listRowSeparator(.visible)
-          .listRowSeparatorTint(.secondary.opacity(0.5))
-      }
-      .navigationSplitViewColumnWidth(min: 200, ideal: 300)
-      .overlay {
-        shortcuts()
-      }
+      list().background { shortcuts() }
+        .navigationSplitViewColumnWidth(min: 200, ideal: 300)
     } detail: {
-      if let selectedId = store.pprofsSelectedId, let st = store.scope(state: \.pprofs[id: selectedId], action: \.pprofs[id: selectedId]) {
-        DetailView(store: st).id(st.id)
-          .sc("w", modifiers: [.command]) {
-            store.send(.onCloseTabCommand)
-          }
-      } else {
-        WelcomeView()
-      }
+      detail()
     }
     .navigationTitle("")
-    .animation(.easeInOut(duration: 0.2), value: store.pprofsSelectedId)
     .onAppear {
       store.send(.onAppear)
+    }
+  }
+
+  @ViewBuilder
+  private func list() -> some View {
+    List(store.scope(state: \.pprofs, action: \.pprofs),
+         selection: $store.pprofsSelectedId.sending(\.onPprofsSelectedIdChanged).animation())
+    { pprofStore in
+      PProfRowView(store: pprofStore)
+        .contextMenu { rowContextMenu(pprofUUID: pprofStore.id) }
+        .tag(pprofStore.basic.id)
+        .listRowSeparator(.visible)
+        .listRowSeparatorTint(.secondary.opacity(0.5))
+    }
+  }
+
+  @ViewBuilder
+  private func detail() -> some View {
+    if let selectedId = store.pprofsSelectedId, let st = store.scope(state: \.pprofs[id: selectedId], action: \.pprofs[id: selectedId]) {
+      DetailView(store: st).id(st.id)
+        .sc("w", modifiers: [.command]) {
+          store.send(.onCloseTabCommand)
+        }
+    } else {
+      WelcomeView()
     }
   }
 

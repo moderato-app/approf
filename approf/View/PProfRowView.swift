@@ -3,56 +3,69 @@ import SwiftUI
 
 struct PProfRowView: View {
   @Bindable var store: StoreOf<DetailFeature>
-  var selected: Bool = false
 
-  @State var hoveringOnStatusButton = false
-
+  @State var hoveringOnButton = false
   @State var hoveringOnRow = false
-  @State var startButtonWidth = 0.0
 
   var body: some View {
-    row()
-      .contentShape(RoundedRectangle(cornerRadius: 8))
-      .overlay(alignment: .trailing) {
-        startButton()
-          .onGeometryChange(for: CGFloat.self) { proxy in proxy.size.width } action: { width in startButtonWidth = width }
-          .offset(x: startButtonXOffset)
-          .animation(.bouncy, value: startButtonXOffset)
+    VStack(alignment: .leading, spacing: 4) {
+      name()
+      HStack(alignment: .firstTextBaseline) {
+        meta()
+        Spacer()
+        date()
+        buttons()
       }
-      .onHover { h in
+      .font(.callout)
+      .foregroundStyle(.secondary)
+      .animation(.default, value: store.isRunning)
+    }
+    .onHover { h in
+      withAnimation {
         hoveringOnRow = h
       }
+    }
+    .contentShape(RoundedRectangle(cornerRadius: 8))
   }
 
-  var startButtonXOffset: CGFloat {
-    if !selected, hoveringOnRow {
-      switch store.period {
-      case .idle, .terminated:
-        return 0
-      default:
-        return startButtonWidth + 50
+  @ViewBuilder
+  func buttons() -> some View {
+    ZStack {
+      if store.isRunning {
+        if hoveringOnButton {
+          stopButton()
+        } else {
+          runningButton()
+        }
+      } else if showStartButton {
+        startButton()
       }
     }
-    return startButtonWidth + 50
+    .onHover { h in
+      withAnimation {
+        hoveringOnButton = h
+      }
+    }
+  }
+
+  var showStartButton: Bool {
+    switch store.period {
+    case .idle, .terminated, .failure:
+      return hoveringOnRow
+    default:
+      return false
+    }
   }
 
   @ViewBuilder
   func startButton() -> some View {
-    Button(action: {
-      store.send(.onStartButtonTapped)
-    }) {
-      Rectangle()
-        .fill(.tint)
-        .aspectRatio(1, contentMode: .fit)
-        .overlay {
-          Image(systemName: "restart")
-            .resizable()
-            .scaledToFit()
-            .foregroundStyle(.white)
-            .containerRelativeFrame(.vertical) { v, _ in v * 0.4 }
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 8))
-    }.buttonStyle(.plain)
+    Button(action: { store.send(.onStartButtonTapped) }) {
+      Image(systemName: "restart.circle")
+        .foregroundStyle(.foreground)
+    }
+    .buttonStyle(.plain)
+    .transition(.movingParts.iris(blurRadius: 50))
+    .help("Start pprof process and show the WEB page.")
   }
 
   @ViewBuilder
@@ -61,6 +74,7 @@ struct PProfRowView: View {
       .foregroundStyle(.green)
       .scaleEffect(0.4)
       .transition(.movingParts.iris(blurRadius: 50))
+      .help("pprof process is running")
   }
 
   @ViewBuilder
@@ -68,62 +82,43 @@ struct PProfRowView: View {
     Image(systemName: "square.fill")
       .foregroundStyle(.red.gradient)
       .scaleEffect(1.3)
-      .transition(.movingParts.iris(
-        blurRadius: 50
-      ))
+      .transition(.movingParts.iris(blurRadius: 50))
       .onTapGesture {
         store.send(.period(.success(.stop)))
       }
+      .help("Terminate pprof process")
   }
 
   @ViewBuilder
-  func row() -> some View {
-    VStack(alignment: .leading, spacing: 4) {
-      Text(store.basic.computedName.forceCharWrapping)
-        .font(.title3)
-        .fontWeight(.semibold)
-        .lineLimit(2)
+  func name() -> some View {
+    Text(store.basic.computedName.forceCharWrapping)
+      .font(.title3)
+      .fontWeight(.semibold)
+      .lineLimit(2)
+  }
 
-      let count = store.basic.filePaths.count
-      HStack(alignment: .firstTextBaseline) {
-        if count > 1 {
-          HStack(alignment: .firstTextBaseline, spacing: 0) {
-            Image(systemName: "document")
-            Text("×\(count)")
-          }
-        }
-
-        if store.basic.presentation != .dft {
-          Text("\(store.basic.presentation)")
-        }
-
-        Spacer()
-
-        let date = store.basic.createdAt
-        if date.isToday() {
-          Text("Today \(date.formatted(date: .omitted, time: .shortened))")
-        } else {
-          Text("\(date.formatted(date: .abbreviated, time: .shortened))")
-        }
-
-        if store.isRunning {
-          ZStack {
-            if hoveringOnStatusButton {
-              stopButton()
-            } else {
-              runningButton()
-            }
-          }
-          .onHover { h in
-            withAnimation {
-              hoveringOnStatusButton = h
-            }
-          }
-        }
+  @ViewBuilder
+  func meta() -> some View {
+    let count = store.basic.filePaths.count
+    if count > 1 {
+      HStack(alignment: .firstTextBaseline, spacing: 0) {
+        Image(systemName: "document")
+        Text("×\(count)")
       }
-      .font(.callout)
-      .foregroundStyle(.secondary)
-      .animation(.default, value: store.isRunning)
+    }
+
+    if store.basic.presentation != .dft {
+      Text("\(store.basic.presentation)")
+    }
+  }
+
+  @ViewBuilder
+  func date() -> some View {
+    let date = store.basic.createdAt
+    if date.isToday() {
+      Text("Today \(date.formatted(date: .omitted, time: .shortened))")
+    } else {
+      Text("\(date.formatted(date: .abbreviated, time: .shortened))")
     }
   }
 }

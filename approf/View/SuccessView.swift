@@ -39,7 +39,7 @@ struct SuccessView: View {
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 4)
-        .help("Stop\nTerminate the pprof process.")
+        .help("Terminate pprof process")
         .opacity(store.fullyLoaded ? 1 : 0)
       }
     }
