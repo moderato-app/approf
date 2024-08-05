@@ -10,29 +10,31 @@ struct WelcomeView: View {
       if showGraphvizGuide {
         VStack {
           Spacer()
-          HStack {
+          HStack(alignment: .firstTextBaseline) {
             Image("Gopple").resizable().scaledToFit().frame(height: titleHeight * 2)
             Text(", have you got Graphviz installed?").font(.largeTitle)
               .onGeometryChange(for: CGFloat.self) { proxy in proxy.size.height } action: { titleHeight = $0 }
           }
           Spacer().frame(height: 20)
-          Text("Let’s locate the bin folder of Graphviz; it should have the dot executable.")
+          Text("Let’s locate the bin folder of Graphviz; it should have the `dot` executable.")
             .font(.title2)
             .fontWeight(.thin)
             .foregroundStyle(.secondary)
           Spacer()
-          GraphvizGuideView(showTitle: false) { exist in
-            if exist {
-              Task.detached {
-                try await Task.sleep(for: .seconds(1.5))
-                Task { @MainActor in
-                  withAnimation(.easeInOut(duration: 1.5)) {
-                    showGraphvizGuide = false
+          Grid(alignment: .leadingFirstTextBaseline) {
+            GraphvizGuideView(showTitle: false) { exist in
+              if exist {
+                Task.detached {
+                  try await Task.sleep(for: .seconds(1.5))
+                  Task { @MainActor in
+                    withAnimation(.easeInOut(duration: 1.5)) {
+                      showGraphvizGuide = false
+                    }
                   }
                 }
+              } else {
+                showGraphvizGuide = true
               }
-            } else {
-              showGraphvizGuide = true
             }
           }
           Spacer()

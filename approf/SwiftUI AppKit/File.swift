@@ -36,3 +36,15 @@ func selectMultiFiles(_ filePath: String? = nil, utTypes: [UTType]? = nil) -> [U
   }
   return []
 }
+
+extension URL {
+  // doesn't encode; remove last '/'
+  var nicePath: String {
+    let path = self.path(percentEncoded: false)
+    if path.hasSuffix("/") {
+      return String(path.dropLast())
+    } else {
+      return path
+    }
+  }
+}
