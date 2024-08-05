@@ -15,10 +15,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(_ notification: Notification) {
     log.logLevel = .debug
 
-    let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .localDomainMask)
-    log.debug("documentDirectory:")
-    log.debug("\(urls)")
-
     if let window = NSApp.windows.first {
       windowController = CustomWindowController(window: window)
       windowController?.showWindow(self)
@@ -85,7 +81,9 @@ private func registerSpotlightSearch3() {
   attributeSet.contentDescription = "A native macOS app to view pprof profiles"
 
   let item = CSSearchableItem(uniqueIdentifier: "the.future.app.approf.approf.alternative3", domainIdentifier: nil, attributeSet: attributeSet)
-  CSSearchableIndex.default().indexSearchableItems([item]) {
-    print("Finished indexing with \(String(describing: $0))")
+  CSSearchableIndex.default().indexSearchableItems([item]) { err in
+    if let err = err {
+      log.error("CSSearchableIndex.default().indexSearchableItems err: \(err)")
+    }
   }
 }

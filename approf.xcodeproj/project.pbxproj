@@ -884,7 +884,7 @@
 					"$(PROJECT_DIR)/approf/Process",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 14.0;
+				MARKETING_VERSION = 14.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = the.future.app.approf.approf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -919,7 +919,7 @@
 					"$(PROJECT_DIR)/approf/Process",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 14.0;
+				MARKETING_VERSION = 14.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = the.future.app.approf.approf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
