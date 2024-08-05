@@ -6,7 +6,7 @@ import SwiftUI
 struct FileListView: View {
   @Bindable var store: StoreOf<UnderTheHood>
   var importing: Bool = false
-  
+
   var body: some View {
     VStack(alignment: .leading) {
       HStack(alignment: .firstTextBaseline, spacing: 4) {
@@ -78,21 +78,34 @@ struct FileListView: View {
       )
     }
   }
-  
+
   @ViewBuilder
   private func rowContextMenu(filePath: String, deleteDisabled: Bool) -> some View {
     Button("Show in Finder") {
       showInFinder(filePath)
     }
     .keyboardShortcut("j", modifiers: [.command, .shift])
+
+    Button(action: {
+      store.send(.onMoveUpCommand, animation: .default)
+    }) {
+      Text("Move Up")
+    }
+    .keyboardShortcut(.upArrow, modifiers: [.command])
+    
+    Button(action: {
+      store.send(.onMoveDownCommand, animation: .default)
+    }) {
+      Text("Move Down")
+    }
+    .keyboardShortcut(.downArrow, modifiers: [.command])
+
     Button(action: {
       store.send(.onDeleteMenuTapped(filePath), animation: .default)
     }) {
       Text("Delete").foregroundStyle(.red)
     }
-    .foregroundStyle(.red)
     .keyboardShortcut(.delete, modifiers: [.command])
     .disabled(deleteDisabled)
   }
-
 }

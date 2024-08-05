@@ -19,10 +19,15 @@ struct AppFeature {
     case onAppTermination
     case deleteButtonTapped(UUID)
     case onDeleteCommand
+    case onCloseTabCommand
+    case onMove(from: IndexSet, to: Int)
+    case onMoveUpCommand
+    case onMoveDownCommand
+
+    
     case deleteNow(UUID)
     case pprofs(IdentifiedActionOf<DetailFeature>)
 
-    case onCloseTabCommand
 
     case drop(DropFeature.Action)
   }
@@ -80,6 +85,19 @@ struct AppFeature {
         return .none
       case .onCloseTabCommand:
         state.pprofsSelectedId = nil
+        return .none
+      case let .onMove(from, to):
+        move(&state, from, to)
+        return .none
+      case .onMoveUpCommand:
+        if let pprofsSelectedId = state.pprofsSelectedId {
+          moveUp(&state, pprofsSelectedId)
+        }
+        return .none
+      case .onMoveDownCommand:
+        if let pprofsSelectedId = state.pprofsSelectedId {
+          moveDown(&state, pprofsSelectedId)
+        }
         return .none
       case let .pprofs(.element(id: id, action: .delegate(.onPprofsSelectedIdChanged))):
         state.pprofsSelectedId = id
@@ -162,6 +180,29 @@ struct AppFeature {
       }
     }
   }
+  
+  private func move(_ state: inout Self.State, _ source: IndexSet, _ destination: Int) {
+    state.pprofs.move(fromOffsets: source, toOffset: destination)
+  }
+
+  private func moveUp(_ state: inout Self.State, _ pprofsSelectedId: UUID) {
+    guard let index = state.pprofs.firstIndex(where: { $0.id == pprofsSelectedId }) else {
+      return
+    }
+    if index - 1 >= 0 {
+      state.pprofs.move(fromOffsets: IndexSet([index]), toOffset: index - 1)
+    }
+  }
+
+  private func moveDown(_ state: inout Self.State, _ pprofsSelectedId: UUID) {
+    guard let index = state.pprofs.firstIndex(where: { $0.id == pprofsSelectedId }) else {
+      return
+    }
+    if index + 2 <= state.pprofs.count {
+      state.pprofs.move(fromOffsets: IndexSet([index]), toOffset: index + 2)
+    }
+  }
+
 }
 
 extension PersistenceReaderKey

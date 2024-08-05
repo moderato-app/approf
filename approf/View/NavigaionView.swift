@@ -6,8 +6,7 @@ struct NavigaionView: View {
 
   var body: some View {
     NavigationSplitView {
-      list().background { shortcuts() }
-        .navigationSplitViewColumnWidth(min: 200, ideal: 300)
+      list().navigationSplitViewColumnWidth(min: 200, ideal: 300)
     } detail: {
       detail()
     }
@@ -19,14 +18,19 @@ struct NavigaionView: View {
 
   @ViewBuilder
   private func list() -> some View {
-    List(store.scope(state: \.pprofs, action: \.pprofs),
-         selection: $store.pprofsSelectedId.sending(\.onPprofsSelectedIdChanged).animation())
-    { pprofStore in
-      PProfRowView(store: pprofStore)
-        .contextMenu { rowContextMenu(pprofUUID: pprofStore.id) }
-        .tag(pprofStore.basic.id)
-        .listRowSeparator(.visible)
-        .listRowSeparatorTint(.secondary.opacity(0.5))
+    List(selection: $store.pprofsSelectedId.sending(\.onPprofsSelectedIdChanged).animation()) {
+      ForEach(store.scope(state: \.pprofs, action: \.pprofs), id: \.basic.id) { pprofStore in
+        PProfRowView(store: pprofStore)
+          .addHiddenView {
+            rowContextMenu(pprofUUID: pprofStore.id)
+          }
+          .contextMenu { rowContextMenu(pprofUUID: pprofStore.id) }
+          .listRowSeparator(.visible)
+          .listRowSeparatorTint(.secondary.opacity(0.5))
+      }
+      .onMove { from, to in
+        store.send(.onMove(from: from, to: to), animation: .default)
+      }
     }
   }
 
@@ -45,21 +49,22 @@ struct NavigaionView: View {
   @ViewBuilder
   private func rowContextMenu(pprofUUID: UUID) -> some View {
     Button(action: {
+      store.send(.onMoveUpCommand, animation: .default)
+    }) {
+      Text("Move Up")
+    }
+    .keyboardShortcut(.upArrow, modifiers: [.option, .command])
+    Button(action: {
+      store.send(.onMoveDownCommand, animation: .default)
+    }) {
+      Text("Move Down")
+    }
+    .keyboardShortcut(.downArrow, modifiers: [.option, .command])
+    Button(action: {
       store.send(.deleteButtonTapped(pprofUUID))
     }) {
       Text("Delete").foregroundStyle(.red)
     }
-    .keyboardShortcut(.delete, modifiers: [.command, .shift])
-  }
-
-  @ViewBuilder
-  private func shortcuts() -> some View {
-    Rectangle()
-      .fill(.clear)
-      .frame(width: 1, height: 1)
-      .allowsHitTesting(false)
-      .sc(.delete, modifiers: [.command, .shift]) {
-        store.send(.onDeleteCommand)
-      }
+    .keyboardShortcut(.delete, modifiers: [.shift, .command])
   }
 }

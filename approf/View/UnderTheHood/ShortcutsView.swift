@@ -11,12 +11,6 @@ struct ShortcutsView: View {
       .fill(.clear)
       .frame(width: 1, height: 1)
       .allowsHitTesting(false)
-      .sc(.upArrow, modifiers: [.command, .shift]) {
-        store.send(.onMoveUpCommand, animation: .default)
-      }
-      .sc(.downArrow, modifiers: [.command, .shift]) {
-        store.send(.onMoveDownCommand, animation: .default)
-      }
       .sc(.rightArrow, modifiers: []) {
         store.send(.onNextPresentationCommand, animation: .default)
       }

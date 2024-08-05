@@ -1,4 +1,5 @@
 import AppKit
+import CoreSpotlight
 import Logging
 
 var log = Logger(label: "mac-pprof")
@@ -23,6 +24,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       windowController?.showWindow(self)
     }
 
+    registerSpotlightSearch()
+    registerSpotlightSearch2()
+    registerSpotlightSearch3()
 //    showTrafficLights(window, false)
   }
 
@@ -57,10 +61,31 @@ func showTrafficLights(_ window: NSWindow, _ show: Bool) {
 }
 
 private func registerSpotlightSearch() {
-  let userActivity = NSUserActivity(activityType: "com.example.myApp.alternative")
+  let userActivity = NSUserActivity(activityType: "the.future.app.approf.approf.alternative")
   userActivity.title = "approf"
-  userActivity.keywords = ["pprof", "go"]
+  userActivity.keywords = ["pprof", "go", "pp"]
   userActivity.isEligibleForSearch = true
   userActivity.isEligibleForPublicIndexing = true
   userActivity.becomeCurrent()
+}
+
+private func registerSpotlightSearch2() {
+  let attributeSet = CSSearchableItemAttributeSet(contentType: UTType.data)
+  attributeSet.title = "approf"
+  attributeSet.contentDescription = "A native macOS app to view pprof profiles"
+  attributeSet.keywords = ["pprof", "go", "pp"]
+  let item = CSSearchableItem(uniqueIdentifier: "0", domainIdentifier: "the.future.app.approf.approf.alternative", attributeSet: attributeSet)
+  CSSearchableIndex.default().indexSearchableItems([item])
+}
+
+private func registerSpotlightSearch3() {
+  let attributeSet = CSSearchableItemAttributeSet(itemContentType: "application")
+  attributeSet.title = "approf"
+  attributeSet.keywords = ["pprof", "go", "pp"]
+  attributeSet.contentDescription = "A native macOS app to view pprof profiles"
+
+  let item = CSSearchableItem(uniqueIdentifier: "the.future.app.approf.approf.alternative3", domainIdentifier: nil, attributeSet: attributeSet)
+  CSSearchableIndex.default().indexSearchableItems([item]) {
+    print("Finished indexing with \(String(describing: $0))")
+  }
 }
