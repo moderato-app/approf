@@ -19,7 +19,7 @@ struct ActionButtonView: View {
       Spacer()
     }
   }
-  
+
   @ViewBuilder
   private func actionButton() -> some View {
     switch periodStatus {
@@ -33,17 +33,28 @@ struct ActionButtonView: View {
         store.send(.delegate(.launchButtonTapped))
       }
       .buttonStyle(BorderedProminentButtonStyle())
-    case .success:
+    case let .success(snapshot):
       HStack(alignment: .firstTextBaseline) {
         Button("Stop") {
           store.send(.delegate(.stopButtonTapped))
         }
-        Button("go to web") {
-          store.send(.delegate(.goToWEBButtonTapped))
+        if store.basic.equalsSnapshot(snapshot: snapshot) {
+          Button("go to web") {
+            store.send(.delegate(.goToWEBButtonTapped))
+          }
+          .buttonStyle(.plain)
+          .foregroundStyle(.tint)
+          .fontDesign(.rounded)
+        } else {
+          Text("changes have been made, you may want to")
+            .foregroundStyle(.secondary)
+          Button("reluanch") {
+            store.send(.delegate(.relaunchButtonTapped))
+          }
+          .buttonStyle(.plain)
+          .foregroundStyle(.tint)
+          .fontDesign(.rounded)
         }
-        .buttonStyle(.plain)
-        .foregroundStyle(.tint)
-        .fontDesign(.rounded)
       }
     case .launching:
       Button("Cancel") {

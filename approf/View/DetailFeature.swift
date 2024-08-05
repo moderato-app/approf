@@ -28,6 +28,8 @@ struct DetailFeature {
     case onSwitchViewChanged(DetailSubViewType)
     case onStartButtonTapped
 
+    case onLaunch
+
     case delegate(Delegate)
 
     @CasePathable
@@ -62,13 +64,19 @@ struct DetailFeature {
       case let .onSwitchViewChanged(t):
         state.subViewType = t
         return .none
-      case .uth(.delegate(.launchButtonTapped)),
+      case .onLaunch,
+           .uth(.delegate(.launchButtonTapped)),
            .period(.failure(.delegate(.launchButtonTapped))),
            .period(.idle(.delegate(.launchButtonTapped))),
            .period(.terminated(.delegate(.launchButtonTapped))):
         self.cleanUp(state: &state)
         state.period = .launching(LaunchingFeature.State(basic: state.$basic))
         return .send(.period(.launching(.start)))
+      case .uth(.delegate(.relaunchButtonTapped)):
+        return .merge(
+          .send(.period(.launching(.stop))),
+          .send(.onLaunch)
+        )
       case let .period(.launching(.delegate(.onSuccess(process, portReady, goToWEB)))):
         let conf = WKWebViewConfiguration()
         conf.defaultWebpagePreferences.allowsContentJavaScript = true
@@ -173,8 +181,8 @@ extension DetailFeature.State {
       .launching
     case .failure:
       .failure
-    case .success:
-      .success
+    case let .success(sc):
+      .success(snapshot: sc.snapshot)
     }
   }
 }

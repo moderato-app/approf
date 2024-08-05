@@ -37,6 +37,7 @@ struct UnderTheHood {
     @CasePathable
     enum Delegate {
       case launchButtonTapped
+      case relaunchButtonTapped
       case stopButtonTapped
       case goToWEBButtonTapped
 

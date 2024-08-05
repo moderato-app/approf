@@ -12,6 +12,16 @@ struct SuccessFeature {
     let wk: WKWebView
     var fullyLoaded = false
 
+    // this is a copy of basic, and is used detect if changes have been made before process is terminated
+    let snapshot: PProfBasic
+
+    init(basic: Shared<PProfBasic>, process: Process, port: UInt16, wk: WKWebView) {
+      _basic = basic
+      self.process = process
+      self.port = port
+      self.wk = wk
+      self.snapshot = basic.wrappedValue
+    }
   }
 
   enum Action {
