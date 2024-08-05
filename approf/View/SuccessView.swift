@@ -28,6 +28,15 @@ struct SuccessView: View {
       }
 
       ToolbarItem(placement: .status) {
+        Button(action: { store.send(.onHomeButtonTapped) }) {
+          Image(systemName: "house")
+        }
+        .buttonStyle(.borderless)
+        .help("Home")
+        .opacity(store.fullyLoaded ? 1 : 0)
+      }
+
+      ToolbarItem(placement: .status) {
         statusBar()
           .frame(width: addrBarWidth)
           .opacity(store.fullyLoaded ? 1 : 0)
@@ -81,7 +90,7 @@ struct SuccessView: View {
 
       Button(action: {
         wkRefreshCount += 1
-        store.wk.reload()
+        store.send(.onRefreshButtonTapped)
       }) {
         Image(systemName: "arrow.clockwise")
       }

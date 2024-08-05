@@ -27,6 +27,9 @@ struct SuccessFeature {
   enum Action {
     case stop
     case onFullyLoaded
+    case onRefreshButtonTapped
+    case onHomeButtonTapped
+
     case delegate(Delegate)
 
     @CasePathable
@@ -42,6 +45,12 @@ struct SuccessFeature {
         return .none
       case .onFullyLoaded:
         state.fullyLoaded = true
+        return .none
+      case .onHomeButtonTapped:
+        state.wk.load(URLRequest(url: URL(string: "http://localhost:\(state.port)")!))
+        return .none
+      case .onRefreshButtonTapped:
+        state.wk.reload()
         return .none
       case .stop:
         if state.process.isRunning {
