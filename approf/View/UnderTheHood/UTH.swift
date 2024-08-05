@@ -18,6 +18,7 @@ struct UnderTheHood {
   enum Action {
     case destination(PresentationAction<Destination.Action>)
     case onSelectionChanged(String?)
+    case onNameChanged(String)
     case onPresentationChanged(PProfPresentation)
     case onSelectFilesEnd([String])
 
@@ -56,6 +57,9 @@ struct UnderTheHood {
         return .none
       case let .onSelectionChanged(filePath):
         state.selection = filePath
+        return .none
+      case let .onNameChanged(name):
+        state.basic.name = name
         return .none
       case let .onSelectFilesEnd(filePaths):
         addFiles(&state, filePaths: filePaths)

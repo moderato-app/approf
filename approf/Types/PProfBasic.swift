@@ -2,7 +2,7 @@ import Foundation
 
 struct PProfBasic: Equatable, Identifiable, Codable {
   var id: UUID
-  var name: String?
+  var name: String
   var filePaths: [String]
   var createdAt: Date
   var presentation: PProfPresentation
@@ -12,6 +12,7 @@ struct PProfBasic: Equatable, Identifiable, Codable {
 
   init(filePaths: [String], presentation: PProfPresentation = .dft, httpDetectLog: [HTTPResult] = [], terminalOutput: [TerminalRecord] = [], finalCommandArgs: [CommandLine.CommandArg] = []) {
     self.id = UUID()
+    self.name = ""
     self.filePaths = filePaths
     self.createdAt = Date()
     self.presentation = presentation
@@ -30,6 +31,7 @@ struct PProfBasic: Equatable, Identifiable, Codable {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(self.id, forKey: .id)
     try container.encode(self.name, forKey: .name)
+    try container.encode(self.name, forKey: .name)
     try container.encode(self.filePaths, forKey: .filePaths)
     try container.encode(self.createdAt, forKey: .createdAt)
     try container.encode(self.presentation, forKey: .presentation)
@@ -39,7 +41,7 @@ struct PProfBasic: Equatable, Identifiable, Codable {
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     self.id = try container.decode(UUID.self, forKey: .id)
-    self.name = try container.decodeIfPresent(String.self, forKey: .name)
+    self.name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
     self.filePaths = try container.decode([String].self, forKey: .filePaths)
     self.createdAt = try container.decode(Date.self, forKey: .createdAt)
     self.presentation = try container.decode(PProfPresentation.self, forKey: .presentation)
@@ -75,7 +77,7 @@ extension PProfBasic {
 
 extension PProfBasic {
   var computedName: String {
-    if let name = self.name {
+    if !name.isEmpty {
       return name
     }
 

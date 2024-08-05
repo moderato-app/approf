@@ -22,6 +22,7 @@ struct CommandPreviewView: View {
           Picker("", selection: $store.basic.presentation.sending(\.onPresentationChanged)) {
             ForEach(PProfPresentation.allCases, id: \.self) { c in
               Text("\(c.rawValue)")
+                .help(c.explanation)
             }
           }
           .pickerStyle(.segmented)

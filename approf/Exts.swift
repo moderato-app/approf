@@ -4,13 +4,6 @@ import Network
 
 extension String: @retroactive Error {}
 
-extension Date {
-    func isToday() -> Bool {
-        let calendar = Calendar.current
-        return calendar.isDateInToday(self)
-    }
-}
-
 func findRandomAvailablePort() throws -> UInt16 {
   let parameters = NWParameters.tcp
   parameters.requiredLocalEndpoint = NWEndpoint.hostPort(host: .ipv4(.loopback), port: .any)
@@ -201,25 +194,23 @@ extension String {
   }
 }
 
-
 extension UInt64 {
-    /// Returns a human-readable file size string (e.g., "18B", "20KB", "20MB").
-    func humanReadableFileSize() -> String {
-        let size = Double(self)
-        if size < 1024 {
-            return "\(self)B"
-        }
-        let units = ["KB", "MB", "GB", "TB", "PB"]
-        var unitIndex = 0
-        var adjustedSize = size / 1024.0
-        while adjustedSize >= 1024 && unitIndex < units.count - 1 {
-            adjustedSize /= 1024
-            unitIndex += 1
-        }
-        return String(format: "%.1f%@", adjustedSize, units[unitIndex])
+  /// Returns a human-readable file size string (e.g., "18B", "20KB", "20MB").
+  func humanReadableFileSize() -> String {
+    let size = Double(self)
+    if size < 1024 {
+      return "\(self)B"
     }
+    let units = ["KB", "MB", "GB", "TB", "PB"]
+    var unitIndex = 0
+    var adjustedSize = size / 1024.0
+    while adjustedSize >= 1024 && unitIndex < units.count - 1 {
+      adjustedSize /= 1024
+      unitIndex += 1
+    }
+    return String(format: "%.1f%@", adjustedSize, units[unitIndex])
+  }
 }
-
 
 func getFileSize(atPath path: String) -> UInt64? {
   do {

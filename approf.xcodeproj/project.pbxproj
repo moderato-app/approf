@@ -28,7 +28,6 @@
 		EB62B5872C5FEB9200188A9D /* CommandPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB62B5862C5FEB9200188A9D /* CommandPreviewView.swift */; };
 		EB62B5892C5FEBC900188A9D /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB62B5882C5FEBC900188A9D /* TerminalView.swift */; };
 		EB62B58B2C5FEC1B00188A9D /* ActionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB62B58A2C5FEC1B00188A9D /* ActionButtonView.swift */; };
-		EB62B58D2C5FECEB00188A9D /* PresPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB62B58C2C5FECEB00188A9D /* PresPickerView.swift */; };
 		EB62B58F2C5FED3800188A9D /* ShortcutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB62B58E2C5FED3800188A9D /* ShortcutsView.swift */; };
 		EB62B5922C5FEEE800188A9D /* PerviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB62B5902C5FEEE800188A9D /* PerviewData.swift */; };
 		EB6530F52C41C09800A66B7C /* DropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6530F42C41C09800A66B7C /* DropView.swift */; };
@@ -71,6 +70,9 @@
 		EBB794882C41146000D5AE1C /* PProfRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB794872C41146000D5AE1C /* PProfRowView.swift */; };
 		EBBB83212C60BD2A002F2892 /* DefaultGzAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBB83202C60BD2A002F2892 /* DefaultGzAppView.swift */; };
 		EBBB83232C60DB79002F2892 /* GraphvizGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBB83222C60DB79002F2892 /* GraphvizGuideView.swift */; };
+		EBBB83272C60E4D6002F2892 /* NameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBB83262C60E4D6002F2892 /* NameView.swift */; };
+		EBBB83292C60E673002F2892 /* NameFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBB83282C60E673002F2892 /* NameFeature.swift */; };
+		EBBB832B2C60EC3A002F2892 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBB832A2C60EC3A002F2892 /* Date.swift */; };
 		EBD20FBD2C42D06300EE88D7 /* LightsOff.metal in Sources */ = {isa = PBXBuildFile; fileRef = EBD20FBC2C42D06300EE88D7 /* LightsOff.metal */; };
 		EBD292B42C430F8000FFB285 /* ShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD292B32C430F8000FFB285 /* ShortcutView.swift */; };
 		EBD292BA2C430F9700FFB285 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = EBD292B92C430F9700FFB285 /* KeyboardShortcuts */; };
@@ -141,7 +143,6 @@
 		EB62B5862C5FEB9200188A9D /* CommandPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandPreviewView.swift; sourceTree = "<group>"; };
 		EB62B5882C5FEBC900188A9D /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
 		EB62B58A2C5FEC1B00188A9D /* ActionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonView.swift; sourceTree = "<group>"; };
-		EB62B58C2C5FECEB00188A9D /* PresPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresPickerView.swift; sourceTree = "<group>"; };
 		EB62B58E2C5FED3800188A9D /* ShortcutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsView.swift; sourceTree = "<group>"; };
 		EB62B5902C5FEEE800188A9D /* PerviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerviewData.swift; sourceTree = "<group>"; };
 		EB6530F42C41C09800A66B7C /* DropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropView.swift; sourceTree = "<group>"; };
@@ -188,6 +189,9 @@
 		EBB794872C41146000D5AE1C /* PProfRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PProfRowView.swift; sourceTree = "<group>"; };
 		EBBB83202C60BD2A002F2892 /* DefaultGzAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGzAppView.swift; sourceTree = "<group>"; };
 		EBBB83222C60DB79002F2892 /* GraphvizGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphvizGuideView.swift; sourceTree = "<group>"; };
+		EBBB83262C60E4D6002F2892 /* NameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameView.swift; sourceTree = "<group>"; };
+		EBBB83282C60E673002F2892 /* NameFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameFeature.swift; sourceTree = "<group>"; };
+		EBBB832A2C60EC3A002F2892 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		EBD20FBC2C42D06300EE88D7 /* LightsOff.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = LightsOff.metal; sourceTree = "<group>"; };
 		EBD292B32C430F8000FFB285 /* ShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutView.swift; sourceTree = "<group>"; };
 		EBD292BB2C43116400FFB285 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -388,10 +392,11 @@
 				EB96D98B2C470E9C00FA6E52 /* UTH.swift */,
 				EB96D98C2C470E9C00FA6E52 /* UnderTheHoodView.swift */,
 				EB62B58E2C5FED3800188A9D /* ShortcutsView.swift */,
-				EB62B58C2C5FECEB00188A9D /* PresPickerView.swift */,
 				EB62B58A2C5FEC1B00188A9D /* ActionButtonView.swift */,
 				EB62B5882C5FEBC900188A9D /* TerminalView.swift */,
 				EB62B5842C5FEB0700188A9D /* FileListView.swift */,
+				EBBB83262C60E4D6002F2892 /* NameView.swift */,
+				EBBB83282C60E673002F2892 /* NameFeature.swift */,
 				EB17F1F52C48169A00ED297A /* FileRowView.swift */,
 				EB62B5862C5FEB9200188A9D /* CommandPreviewView.swift */,
 				EB9355642C47E9D10055C90D /* StatusView.swift */,
@@ -429,6 +434,7 @@
 				EBE8334B2C3C8AD400FD8A73 /* Hover.swift */,
 				EBE8334E2C3C8BBD00FD8A73 /* Tooltip.swift */,
 				EBFC00EE2C3D0AFE004A1B93 /* Delay.swift */,
+				EBBB832A2C60EC3A002F2892 /* Date.swift */,
 				EBEC3ABA2C3D0F3C0016F878 /* Toolbar.swift */,
 				EB5026802C3D139F007C6282 /* Other.swift */,
 				EB1F1FC02C45AEB700FD585E /* Shortcuts.swift */,
@@ -628,6 +634,7 @@
 				EB0A27312C413CE400AD34ED /* NavigaionView.swift in Sources */,
 				EBD292B42C430F8000FFB285 /* ShortcutView.swift in Sources */,
 				EB6530FB2C41CF8D00A66B7C /* WebIndicatorView.swift in Sources */,
+				EBBB832B2C60EC3A002F2892 /* Date.swift in Sources */,
 				EBEC3ABB2C3D0F3C0016F878 /* Toolbar.swift in Sources */,
 				EB94442A2C42F6E50050F0D1 /* State.swift in Sources */,
 				EB2A0B4A2C4663CB0085609E /* CommandGenerate.swift in Sources */,
@@ -670,7 +677,7 @@
 				EBB37A982C40EFCB00D04474 /* DetectingHTTPView.swift in Sources */,
 				EB8190CA2C4571F8007EDE72 /* GradientBackgroundAnimation.swift in Sources */,
 				EB17F1F62C48169A00ED297A /* FileRowView.swift in Sources */,
-				EB62B58D2C5FECEB00188A9D /* PresPickerView.swift in Sources */,
+				EBBB83272C60E4D6002F2892 /* NameView.swift in Sources */,
 				EB62B5922C5FEEE800188A9D /* PerviewData.swift in Sources */,
 				EB85AB8F2C3E54CF0080200A /* WkWrapper.swift in Sources */,
 				EBE833542C3C8D9500FD8A73 /* Ripple.metal in Sources */,
@@ -680,6 +687,7 @@
 				EB59362F2C4053D200088AB9 /* Others.swift in Sources */,
 				EBE8334C2C3C8AD400FD8A73 /* Hover.swift in Sources */,
 				EB62B58F2C5FED3800188A9D /* ShortcutsView.swift in Sources */,
+				EBBB83292C60E673002F2892 /* NameFeature.swift in Sources */,
 				EBB794882C41146000D5AE1C /* PProfRowView.swift in Sources */,
 				EB1F1FC32C45B2B300FD585E /* Color.swift in Sources */,
 				EB62B5812C5FE9FD00188A9D /* ImportView.swift in Sources */,

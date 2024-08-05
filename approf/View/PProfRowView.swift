@@ -13,7 +13,7 @@ struct PProfRowView: View {
       HStack(alignment: .firstTextBaseline) {
         meta()
         Spacer()
-        date()
+        Text(store.basic.createdAt.humanReadable()).help("This record is created at \(store.basic.createdAt).")
         buttons()
       }
       .font(.callout)
@@ -105,20 +105,11 @@ struct PProfRowView: View {
         Image(systemName: "document")
         Text("×\(count)")
       }
+      .help("This record contains \(count) files.")
     }
 
     if store.basic.presentation != .dft {
-      Text("\(store.basic.presentation)")
-    }
-  }
-
-  @ViewBuilder
-  func date() -> some View {
-    let date = store.basic.createdAt
-    if date.isToday() {
-      Text("Today \(date.formatted(date: .omitted, time: .shortened))")
-    } else {
-      Text("\(date.formatted(date: .abbreviated, time: .shortened))")
+      Text("\(store.basic.presentation)").help(store.basic.presentation.explanation)
     }
   }
 }

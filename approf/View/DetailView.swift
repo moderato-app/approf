@@ -12,7 +12,6 @@ struct DetailView: View {
         UnderTheHoodView(store: store.scope(state: \.uth, action: \.uth), periodStatus: store.periodStatus)
       }
     }
-    .clipShape(RoundedRectangle(cornerRadius: 10))
     .padding(.horizontal, 8)
     .padding(.bottom, 8)
     .onAppear {

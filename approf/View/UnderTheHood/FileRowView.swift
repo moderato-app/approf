@@ -3,6 +3,7 @@ import SwiftUI
 struct FileRowView: View {
   @State var failedToReadFileReason: String?
   @State var fileAttrs: FileAttrs?
+  @State var hoveringOnLM = false
   
   let filePath: String
   let ignored: Bool
@@ -20,6 +21,7 @@ struct FileRowView: View {
           Image(systemName: "arrowshape.right.circle.fill")
         }
         .buttonStyle(PlainButtonStyle())
+        .help("Show in Finder")
         
         if let fileSize = fileAttrs?.fileSize {
           Text(fileSize.humanReadableFileSize())
@@ -57,9 +59,18 @@ struct FileRowView: View {
             .clipShape(RoundedRectangle(cornerRadius: 8))
         }
         if let lastModified = fileAttrs?.lastModified {
-          let date = lastModified.formatted(date: .abbreviated, time: .omitted)
-          let time = lastModified.formatted(date: .omitted, time: .shortened)
-          Text("last modified: \(date) ").foregroundStyle(.secondary) + Text("\(time)")
+          HStack(alignment: .firstTextBaseline, spacing: 2) {
+            if hoveringOnLM {
+              Text("Last Modified: ")
+            }
+            Text(lastModified.humanReadable())
+          }
+          .foregroundStyle(.secondary)
+          .onHover { h in
+            withAnimation {
+              hoveringOnLM = h
+            }
+          }
         } else {
           Text("f").opacity(0)
         }

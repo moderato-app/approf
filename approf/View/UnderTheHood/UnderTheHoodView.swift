@@ -8,6 +8,7 @@ struct UnderTheHoodView: View {
 
   var body: some View {
     VStack(spacing: 20) {
+      NameView(store: store)
       FileListView(store: store, importing: false)
         .containerRelativeFrame(.vertical) { y, _ in y / 3 }
       CommandPreviewView(store: store, importing: false)
