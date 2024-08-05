@@ -8,7 +8,9 @@ Download the latest app from [release](https://github.com/moderato-app/approf/re
 
 ## Requirements
 * `Graphviz` installed
-* macOS **Sonoma** or later on a **M-series chip**
+* macOS **Sonoma 14.0** or later on a **M-series chip**
+
+_Translucent background is only availble on macOS **Sequoia 15.0** or later_
 
 
 ## Features
