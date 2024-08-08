@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -211,6 +211,10 @@
 		EBEF3BFC2C3BBECB0003477D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EBFC00EE2C3D0AFE004A1B93 /* Delay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		EB7D79402C65635200CCD4F3 /* .github */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = .github; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		EBEF3A1B2C3B255A0003477D /* Frameworks */ = {
@@ -460,6 +464,7 @@
 		EBEF3A152C3B255A0003477D = {
 			isa = PBXGroup;
 			children = (
+				EB7D79402C65635200CCD4F3 /* .github */,
 				EB9444292C42F6E50050F0D1 /* approf */,
 				EB94443A2C42F7050050F0D1 /* approfTests */,
 				EB94443E2C42F70E0050F0D1 /* approfUITests */,
