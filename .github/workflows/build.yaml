@@ -27,12 +27,9 @@ jobs:
           xcodebuild -version
       - name: Allow macro
         run: |
-          defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidation -bool YES
-          cd ci_scripts
-          ./ci_post_clone.sh
-          cd ..
+          defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
       - name: Build
-        run: xcodebuild -project "$XCODE_PROJECT" -scheme "$XCODE_SCHEME" -skipPackagePluginValidation archive CODE_SIGN_IDENTITY="$CODE_SIGN_IDENTITY" -archivePath "$BUILD_DIR/$XCODE_ARCHIVE"
+        run: xcodebuild -project "$XCODE_PROJECT" -scheme "$XCODE_SCHEME" archive CODE_SIGN_IDENTITY="$CODE_SIGN_IDENTITY" -archivePath "$BUILD_DIR/$XCODE_ARCHIVE"
       - name: Export
         run: |
           plutil -convert xml1 - -o "$EXPORT_OPTIONS_PLIST" << EOF
