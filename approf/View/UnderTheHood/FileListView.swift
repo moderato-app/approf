@@ -21,8 +21,7 @@ struct FileListView: View {
             FileRowView(
               filePath: filePath,
               ignored: !importing && (store.basic.presentation == .dft && filePath != store.basic.filePaths.first),
-              isBase: store.basic.presentation == .diff && filePath == store.basic.filePaths.first,
-              delayReadingFile: Duration.milliseconds(100 + 50 * (store.basic.filePaths.firstIndex { $0 == filePath } ?? 2))
+              isBase: store.basic.presentation == .diff && filePath == store.basic.filePaths.first
             )
             .addHiddenView(filePath) {
               if store.selection == filePath {
