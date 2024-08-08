@@ -19,7 +19,7 @@ struct DropView: View {
           GradientBackgroundAnimation()
         }
       }
-      .onDrop(of: profTypes, delegate: DropFileDelegate(store: store))
+      .onDrop(of: allowedImportFileTypes, delegate: DropFileDelegate(store: store))
       .sheet(
         item: $store.scope(state: \.destination?.uth, action: \.destination.uth)
       ) { importingStore in
@@ -58,9 +58,9 @@ class DropFileDelegate: DropDelegate {
   }
 
   func performDrop(info: DropInfo) -> Bool {
-    let providers = info.itemProviders(for: profTypes)
+    let providers = info.itemProviders(for: allowedImportFileTypes)
     let futureArray = providers.compactMap { provider in
-      profTypes.compactMap { ptype in
+      allowedImportFileTypes.compactMap { ptype in
         if provider.hasItemConformingToTypeIdentifier(ptype.identifier) {
           return Future<URL?, Never> { promise in
             _ = provider.loadFileRepresentation(for: ptype, openInPlace: true) { url, _, error in

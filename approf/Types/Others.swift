@@ -1,11 +1,7 @@
 import UniformTypeIdentifiers
 
-let profTypes = [
-  UTType.gzip,
-  UTType("the.future.app.pprof.pprof.filetype.pb")!,
-  UTType("the.future.app.pprof.pprof.filetype.prof")!,
-  UTType("the.future.app.pprof.pprof.filetype.proff")!,
-  UTType("the.future.app.pprof.pprof.filetype.pprof")!
+let allowedImportFileTypes = [
+  UTType.data
 ]
 
 enum PProfError: Error {

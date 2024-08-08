@@ -24,8 +24,10 @@ struct FileListView: View {
               isBase: store.basic.presentation == .diff && filePath == store.basic.filePaths.first,
               delayReadingFile: Duration.milliseconds(100 + 50 * (store.basic.filePaths.firstIndex { $0 == filePath } ?? 2))
             )
-            .addHiddenView {
-              rowContextMenu(filePath: filePath, deleteDisabled: store.basic.filePaths.count == 1)
+            .addHiddenView(filePath) {
+              if store.selection == filePath {
+                rowContextMenu(filePath: filePath, deleteDisabled: store.basic.filePaths.count == 1)
+              }
             }
             .contextMenu {
               rowContextMenu(filePath: filePath, deleteDisabled: store.basic.filePaths.count == 1)
@@ -41,7 +43,7 @@ struct FileListView: View {
 
         HStack(alignment: .center, spacing: 2) {
           Button(action: {
-            let urls = selectMultiFiles(utTypes: profTypes)
+            let urls = selectMultiFiles(utTypes: allowedImportFileTypes)
             if !urls.isEmpty {
               let filePaths = urls.map { $0.path(percentEncoded: false) }
               store.send(.onSelectFilesEnd(filePaths))
@@ -92,7 +94,7 @@ struct FileListView: View {
       Text("Move Up")
     }
     .keyboardShortcut(.upArrow, modifiers: [.command])
-    
+
     Button(action: {
       store.send(.onMoveDownCommand, animation: .default)
     }) {
