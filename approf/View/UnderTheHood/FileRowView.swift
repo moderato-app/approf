@@ -8,7 +8,6 @@ struct FileRowView: View {
   let filePath: String
   let ignored: Bool
   let isBase: Bool
-  var delayReadingFile: Duration = .zero
   
   var body: some View {
     VStack(alignment: .leading, spacing: 2) {
@@ -77,8 +76,8 @@ struct FileRowView: View {
       }
       .font(.footnote)
     }
-    .onAppear(delay: delayReadingFile) {
-      readFile()
+    .task(priority: .background){
+        readFile()
     }
   }
   
