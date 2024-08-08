@@ -10,7 +10,6 @@ struct UnderTheHoodView: View {
     VStack(spacing: 20) {
       NameView(store: store)
       FileListView(store: store, importing: false)
-        .containerRelativeFrame(.vertical) { y, _ in y / 3 }
       CommandPreviewView(store: store, importing: false)
       Spacer().frame(height: 10)
       TerminalView(store: store)
