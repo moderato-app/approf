@@ -14,7 +14,8 @@ extension View {
     }
   }
 
-  func addHiddenView(@ViewBuilder content: () -> some View) -> some View {
-    self.background { content().frame(width: 1, height: 1).opacity(0).allowsTightening(false) }
+  /// Sometimes, the hidden view doesn’t get created. Use an ID to fix this.
+  func addHiddenView<ID>(_ id: ID, @ViewBuilder content: () -> some View) -> some View where ID: Hashable {
+    self.background { content().frame(width: 1, height: 1).opacity(0).allowsTightening(false).id(id) }
   }
 }

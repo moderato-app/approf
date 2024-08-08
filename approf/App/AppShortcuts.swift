@@ -14,7 +14,7 @@ struct CMD: Commands {
     }
     CommandGroup(after: .newItem) {
       Button("Open") {
-        let urls = selectMultiFiles(utTypes: profTypes)
+        let urls = selectMultiFiles(utTypes: allowedImportFileTypes)
         DateSource.store.send(.drop(.onDropEnds(urls)))
       }
       .keyboardShortcut("o", modifiers: [.command])

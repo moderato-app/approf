@@ -21,8 +21,10 @@ struct NavigaionView: View {
     List(selection: $store.pprofsSelectedId.sending(\.onPprofsSelectedIdChanged).animation()) {
       ForEach(store.scope(state: \.pprofs, action: \.pprofs), id: \.basic.id) { pprofStore in
         PProfRowView(store: pprofStore)
-          .addHiddenView {
-            rowContextMenu(pprofUUID: pprofStore.id)
+          .addHiddenView(pprofStore.id) {
+            if store.pprofsSelectedId == pprofStore.id {
+              rowContextMenu(pprofUUID: pprofStore.id)
+            }
           }
           .contextMenu { rowContextMenu(pprofUUID: pprofStore.id) }
           .listRowSeparator(.visible)
