@@ -7,10 +7,8 @@ struct ImportView: View {
   var body: some View {
     VStack(spacing: 20) {
       FileListView(store: store, importing: true)
-        .containerRelativeFrame(.vertical) { y, _ in y * 0.6 }
       Spacer()
       CommandPreviewView(store: store, importing: true)
-      Spacer()
     }
     .background {
       ShortcutsView(store: store)
