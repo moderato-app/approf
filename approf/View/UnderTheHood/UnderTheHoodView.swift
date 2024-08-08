@@ -4,7 +4,7 @@ import SwiftUI
 
 struct UnderTheHoodView: View {
   @Bindable var store: StoreOf<UnderTheHood>
-  let periodStatus: PeroidStatus
+  @Bindable var detailStore: StoreOf<DetailFeature>
 
   var body: some View {
     VStack(spacing: 20) {
@@ -13,7 +13,7 @@ struct UnderTheHoodView: View {
       CommandPreviewView(store: store, importing: false)
       Spacer().frame(height: 10)
       TerminalView(store: store)
-      ActionButtonView(store: store, periodStatus: periodStatus)
+      ActionButtonView(store: detailStore)
       Spacer()
     }
     .background {

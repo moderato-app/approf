@@ -91,7 +91,7 @@ extension PProfBasic {
     return firstFileName
   }
   
-  func equalsSnapshot(snapshot: Self) -> Bool {
+  func equalsSnapshot(_ snapshot: Self) -> Bool {
     snapshot.filePaths == filePaths && snapshot.presentation == presentation
   }
 }
