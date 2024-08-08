@@ -4,7 +4,12 @@ https://github.com/user-attachments/assets/d61cd45f-abd8-4fa1-9038-5f9968ce9c9c
 Open pprof profiles without command-line hassle ✨.
 
 ## Install
-Download the latest app from [release](https://github.com/moderato-app/approf/releases/latest).
+```bash
+brew tap moderato-app/homebrew-brew
+brew install approf
+```
+
+You can also download the latest app from [release](https://github.com/moderato-app/approf/releases/latest).
 
 ## Requirements
 * `Graphviz` installed
