@@ -25,6 +25,8 @@ jobs:
         run: |
           sudo xcode-select -s "/Applications/Xcode_16_beta_4.app"
           xcodebuild -version
+      - name: Allow macro
+        run: defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidation -bool YES
       - name: Build
         run: xcodebuild -project "$XCODE_PROJECT" -scheme "$XCODE_SCHEME" archive CODE_SIGN_IDENTITY="$CODE_SIGN_IDENTITY" -archivePath "$BUILD_DIR/$XCODE_ARCHIVE"
       - name: Export
