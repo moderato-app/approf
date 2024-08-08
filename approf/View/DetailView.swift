@@ -9,7 +9,7 @@ struct DetailView: View {
       if store.subViewType == .graphic, let s = store.scope(state: \.period.success, action: \.period.success) {
         SuccessView(store: s)
       } else {
-        UnderTheHoodView(store: store.scope(state: \.uth, action: \.uth), periodStatus: store.periodStatus)
+        UnderTheHoodView(store: store.scope(state: \.uth, action: \.uth), detailStore: store)
       }
     }
     .padding(.horizontal, 8)

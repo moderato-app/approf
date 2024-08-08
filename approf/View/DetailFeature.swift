@@ -12,6 +12,8 @@ struct DetailFeature {
     var subViewType: DetailSubViewType
     var uth: UnderTheHood.State
 
+    var showGoToWEB = false
+
     init(basic: Shared<PProfBasic>, period: PProfPeriod.State) {
       self.id = basic.id
       _basic = basic
@@ -27,6 +29,11 @@ struct DetailFeature {
     case onAppear
     case onSwitchViewChanged(DetailSubViewType)
     case onStartButtonTapped
+
+    case launchButtonTapped
+    case relaunchButtonTapped
+    case stopButtonTapped
+    case goToWEBButtonTapped
 
     case onLaunch
 
@@ -63,16 +70,17 @@ struct DetailFeature {
         }
       case let .onSwitchViewChanged(t):
         state.subViewType = t
+        state.showGoToWEB = false
         return .none
       case .onLaunch,
-           .uth(.delegate(.launchButtonTapped)),
+           .launchButtonTapped,
            .period(.failure(.delegate(.launchButtonTapped))),
            .period(.idle(.delegate(.launchButtonTapped))),
            .period(.terminated(.delegate(.launchButtonTapped))):
         self.cleanUp(state: &state)
         state.period = .launching(LaunchingFeature.State(basic: state.$basic))
         return .send(.period(.launching(.start)))
-      case .uth(.delegate(.relaunchButtonTapped)):
+      case .relaunchButtonTapped:
         return .merge(
           .send(.period(.launching(.stop))),
           .send(.onLaunch)
@@ -88,6 +96,8 @@ struct DetailFeature {
         state.period = .success(.init(basic: state.$basic, process: process, port: portReady, wk: wk))
         if goToWEB {
           state.subViewType = .graphic
+        } else {
+          state.showGoToWEB = true
         }
         return .merge(
           .run { _ in
@@ -101,13 +111,14 @@ struct DetailFeature {
       case let .period(.launching(.delegate(.onFailed(cause)))):
         state.period = .failure(.init(basic: state.$basic, cause: cause))
         return .none
-      case .uth(.delegate(.stopButtonTapped)):
+      case .stopButtonTapped:
         return .merge(
           .send(.period(.launching(.stop))),
           .send(.period(.success(.stop)))
         )
-      case .uth(.delegate(.goToWEBButtonTapped)):
+      case .goToWEBButtonTapped:
         state.subViewType = .graphic
+        state.showGoToWEB = false
         return .none
       case .period(.launching(.delegate(.onTermimated))),
            .period(.success(.delegate(.onTermimated))):
@@ -168,21 +179,6 @@ extension DetailFeature.State {
       return true
     } else {
       return false
-    }
-  }
-
-  var periodStatus: PeroidStatus {
-    switch self.period {
-    case .idle:
-      .idle
-    case .terminated:
-      .terminated
-    case .launching:
-      .launching
-    case .failure:
-      .failure
-    case let .success(sc):
-      .success(snapshot: sc.snapshot)
     }
   }
 }

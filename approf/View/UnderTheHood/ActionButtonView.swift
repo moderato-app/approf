@@ -4,17 +4,16 @@ import ComposableArchitecture
 import SwiftUI
 
 struct ActionButtonView: View {
-  @Bindable var store: StoreOf<UnderTheHood>
-  let periodStatus: PeroidStatus
+  @Bindable var store: StoreOf<DetailFeature>
 
   var body: some View {
     HStack {
       VStack(alignment: .leading) {
         HStack {
-          UTHStatusView(periodStatus: periodStatus)
+          UTHStatusView(store: store)
           actionButton()
         }
-        DetectingHTTPView(basic: store.basic, periodStatus: periodStatus)
+        DetectingHTTPView(store: store)
       }
       Spacer()
     }
@@ -22,43 +21,47 @@ struct ActionButtonView: View {
 
   @ViewBuilder
   private func actionButton() -> some View {
-    switch periodStatus {
+    switch store.period {
     case .idle, .terminated:
       Button("Launch") {
-        store.send(.delegate(.launchButtonTapped))
+        store.send(.launchButtonTapped)
       }
       .buttonStyle(BorderedProminentButtonStyle())
     case .failure:
       Button("Relaunch") {
-        store.send(.delegate(.launchButtonTapped))
+        store.send(.launchButtonTapped)
       }
       .buttonStyle(BorderedProminentButtonStyle())
-    case let .success(snapshot):
+    case let .success(su):
       HStack(alignment: .firstTextBaseline) {
         Button("Stop") {
-          store.send(.delegate(.stopButtonTapped))
+          store.send(.stopButtonTapped)
         }
-        if store.basic.equalsSnapshot(snapshot: snapshot) {
-          Button("go to web") {
-            store.send(.delegate(.goToWEBButtonTapped))
+        if !store.basic.equalsSnapshot(su.snapshot) {
+          HStack(alignment: .firstTextBaseline, spacing: 0) {
+            Text("Changes detected, ").foregroundStyle(.secondary)
+            Button("reluanch") {
+              store.send(.relaunchButtonTapped)
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(.tint)
+            Text("?").foregroundStyle(.secondary)
           }
-          .buttonStyle(.plain)
-          .foregroundStyle(.tint)
-          .fontDesign(.rounded)
-        } else {
-          Text("changes have been made, you may want to")
-            .foregroundStyle(.secondary)
-          Button("reluanch") {
-            store.send(.delegate(.relaunchButtonTapped))
+        } else if store.showGoToWEB {
+          HStack(alignment: .firstTextBaseline, spacing: 0) {
+            Text("Go to ").foregroundStyle(.secondary)
+            Button("WEB") {
+              store.send(.goToWEBButtonTapped)
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(.tint)
+            Text("?").foregroundStyle(.secondary)
           }
-          .buttonStyle(.plain)
-          .foregroundStyle(.tint)
-          .fontDesign(.rounded)
         }
       }
     case .launching:
       Button("Cancel") {
-        store.send(.delegate(.stopButtonTapped))
+        store.send(.stopButtonTapped)
       }
     }
   }

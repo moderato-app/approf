@@ -4,11 +4,11 @@ enum PProfPresentation: String, Codable, CaseIterable {
   var explanation: String {
     switch self {
     case .dft:
-      "Run `go tool pprof` on each file indivisualy"
+      "Run `go tool pprof` on each file separately"
     case .acc:
       "Run `go tool pprof` on all files at once"
     case .diff:
-      "Run `go tool pprof` on all files at once. Compare all files to the first one (the base file)"
+      "Run `go tool pprof` on all files at once, comparing them to the base"
     }
   }
 

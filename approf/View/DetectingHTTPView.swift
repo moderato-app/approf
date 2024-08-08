@@ -1,16 +1,16 @@
 import SwiftUI
+import ComposableArchitecture
 
 struct DetectingHTTPView: View {
-  let basic: PProfBasic
-  let periodStatus: PeroidStatus
+  @Bindable var store: StoreOf<DetailFeature>
 
   var body: some View {
-    switch periodStatus {
+    switch store.period {
     case .launching:
       TringHttpView()
-      HttpResultView(basic: basic)
+      HttpResultView(basic: store.basic)
     case .failure:
-      HttpResultView(basic: basic)
+      HttpResultView(basic: store.basic)
     default:
       EmptyView()
     }

@@ -1,49 +1,32 @@
 import SwiftUI
-
-enum PeroidStatus {
-  case idle
-  case terminated
-  case launching
-  case failure
-  case success(snapshot: PProfBasic)
-
-  var displayName: String {
-    switch self {
-    case .idle: "Idle"
-    case .terminated: "Terminated"
-    case .launching: "Launching"
-    case .failure: "Failed"
-    case .success: "Running"
-    }
-  }
-}
+import ComposableArchitecture
 
 struct UTHStatusView: View {
-  let periodStatus: PeroidStatus
+  @Bindable var store: StoreOf<DetailFeature>
 
   var body: some View {
     HStack(alignment: .firstTextBaseline) {
-      switch periodStatus {
+      switch store.period {
       case .idle:
         EmptyView()
       case .terminated:
         Image(systemName: "moon.zzz")
-        Text(periodStatus.displayName)
+        Text("Terminated")
       case .launching:
         RotatingSF("arrow.clockwise")
           .foregroundStyle(.orange)
-        Text(periodStatus.displayName)
+        Text("Launching")
           .foregroundStyle(.orange)
         EmptyView()
       case .failure:
         HeartSlash()
-        Text(periodStatus.displayName)
+        Text("Failed")
           .foregroundStyle(.red)
       case .success:
         Image(systemName: "smallcircle.filled.circle")
           .foregroundStyle(.green)
           .symbolEffect(.pulse.wholeSymbol, options: .speed(0.5))
-        Text(periodStatus.displayName)
+        Text("Running")
           .foregroundStyle(.green)
       }
     }
