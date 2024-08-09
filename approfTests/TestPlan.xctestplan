@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "FD72B178-E2F5-4F38-9F74-ED8079928207",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:approf.xcodeproj",
+        "identifier" : "EBEF3A2E2C3B255B0003477D",
+        "name" : "approfTests"
+      }
+    }
+  ],
+  "version" : 1
+}

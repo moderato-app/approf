@@ -10,20 +10,20 @@ struct PProfBasic: Equatable, Identifiable, Codable {
   var terminalOutput: [TerminalRecord]
   var finalCommandArgs: [CommandLine.CommandArg]
 
-  init(filePaths: [String], presentation: PProfPresentation = .dft, httpDetectLog: [HTTPResult] = [], terminalOutput: [TerminalRecord] = [], finalCommandArgs: [CommandLine.CommandArg] = []) {
-    self.id = UUID()
+  init(uuid: UUID, filePaths: [String], createdAt: Date, presentation: PProfPresentation = .dft, httpDetectLog: [HTTPResult] = [], terminalOutput: [TerminalRecord] = [], finalCommandArgs: [CommandLine.CommandArg] = []) {
+    self.id = uuid
     self.name = ""
     self.filePaths = filePaths
-    self.createdAt = Date()
+    self.createdAt = createdAt
     self.presentation = presentation
     self.httpDetectLog = httpDetectLog
     self.terminalOutput = terminalOutput
     self.finalCommandArgs = finalCommandArgs
   }
 
-  init(urls: [URL], presentation: PProfPresentation = .dft) {
+  init(uuid: UUID, urls: [URL], createdAt: Date, presentation: PProfPresentation = .dft) {
     let filePaths = urls.map { $0.path(percentEncoded: false) }
-    self.init(filePaths: filePaths, presentation: presentation)
+    self.init(uuid: uuid, filePaths: filePaths, createdAt: createdAt, presentation: presentation)
   }
 
   // Custom encoding
@@ -62,7 +62,9 @@ struct PProfBasic: Equatable, Identifiable, Codable {
 
 extension PProfBasic {
   static let mock = PProfBasic(
+    uuid: UUID(),
     filePaths: ["/Users/mark/projects/mark/pprof"],
+    createdAt: Date(),
     httpDetectLog: [
       HTTPResult.http(code: 200, html: "<?xml version=\"1.0\" encoding=\"UTF - 8\"?>"),
       HTTPResult.http(code: 403, html: "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">"),
@@ -77,8 +79,8 @@ extension PProfBasic {
 
 extension PProfBasic {
   var computedName: String {
-    if !name.isEmpty {
-      return name
+    if !self.name.isEmpty {
+      return self.name
     }
 
     guard let firstFile = self.filePaths.first else {
@@ -90,9 +92,9 @@ extension PProfBasic {
     }
     return firstFileName
   }
-  
+
   func equalsSnapshot(_ snapshot: Self) -> Bool {
-    snapshot.filePaths == filePaths && snapshot.presentation == presentation
+    snapshot.filePaths == self.filePaths && snapshot.presentation == self.presentation
   }
 }
 
