@@ -6,22 +6,6 @@
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES"
       buildArchitectures = "Automatic">
-      <BuildActionEntries>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EBEF3A1D2C3B255A0003477D"
-               BuildableName = "approf.app"
-               BlueprintName = "approf"
-               ReferencedContainer = "container:approf.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-      </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug"
@@ -46,9 +30,9 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EBEF3A382C3B255B0003477D"
-               BuildableName = "approfUITests.xctest"
-               BlueprintName = "approfUITests"
+               BlueprintIdentifier = "EBBFA8522C657C64006B8B41"
+               BuildableName = "approfTests-bundle.xctest"
+               BlueprintName = "approfTests-bundle"
                ReferencedContainer = "container:approf.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -81,16 +65,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EBEF3A1D2C3B255A0003477D"
-            BuildableName = "approf.app"
-            BlueprintName = "approf"
-            ReferencedContainer = "container:approf.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
