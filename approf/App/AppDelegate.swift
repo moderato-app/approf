@@ -2,7 +2,7 @@ import AppKit
 import CoreSpotlight
 import Logging
 
-var log = Logger(label: "mac-pprof")
+var log = Logger(label: "approf")
 
 class AppDelegate: NSObject, NSApplicationDelegate {
   var windowController: CustomWindowController?

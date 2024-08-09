@@ -19,11 +19,15 @@ struct MacOS15App: App {
 
   var body: some Scene {
     Window("approf", id: "main") {
-      ContentView(store: DateSource.store)
-        .toolbar(removing: .title)
-        .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
-        .containerBackground(asm.materialType.actualMaterial, for: .window)
-        .preferredColorScheme(asm.computedColorScheme)
+      if isTesting {
+        EmptyView()
+      } else {
+        ContentView(store: DateSource.store)
+          .toolbar(removing: .title)
+          .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+          .containerBackground(asm.materialType.actualMaterial, for: .window)
+          .preferredColorScheme(asm.computedColorScheme)
+      }
     }
     .defaultWindowPlacement { _, context in
       let displayBounds = context.defaultDisplay.visibleRect
@@ -34,7 +38,7 @@ struct MacOS15App: App {
       CMD()
     }
 
-    Settings{
+    Settings {
       SettingsView()
         .toolbar(removing: .title)
         .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
@@ -62,8 +66,12 @@ struct MacOS14App: App {
 
   var body: some Scene {
     Window("approf", id: "main") {
-      ContentView(store: DateSource.store)
-        .preferredColorScheme(asm.computedColorScheme)
+      if isTesting {
+        EmptyView()
+      } else {
+        ContentView(store: DateSource.store)
+          .preferredColorScheme(asm.computedColorScheme)
+      }
     }
     .handlesExternalEvents(matching: ["*"])
     .commands {

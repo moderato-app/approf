@@ -30,6 +30,8 @@ struct DropFeature {
   }
 
   @Dependency(\.continuousClock) var clock
+  @Dependency(\.uuid) var uuid
+  @Dependency(\.date) var date
 
   var body: some ReducerOf<Self> {
     Reduce { state, action in
@@ -47,7 +49,7 @@ struct DropFeature {
         if filePaths.isEmpty {
           return .none
         } else if filePaths.count == 1 {
-          let basic = PProfBasic(filePaths: filePaths, presentation: .dft)
+          let basic = PProfBasic(uuid: uuid(), filePaths: filePaths, createdAt: date.now ,presentation: .dft)
           return .run { send in
             try await clock.sleep(for: .seconds(0.1))
             await send(.delegate(.addNewBasic(basic)), animation: .default)
@@ -55,10 +57,10 @@ struct DropFeature {
             await send(.delegate(.selectPProf(basic.id)), animation: .default)
           }
         } else if filePaths.count == 2 {
-          state.destination = .uth(UnderTheHood.State(basic: Shared(PProfBasic(filePaths: filePaths, presentation: .diff))))
+          state.destination = .uth(UnderTheHood.State(basic: Shared(PProfBasic(uuid: uuid(), filePaths: filePaths, createdAt: date.now, presentation: .diff))))
           return .none
         } else {
-          state.destination = .uth(UnderTheHood.State(basic: Shared(PProfBasic(filePaths: filePaths, presentation: .acc))))
+          state.destination = .uth(UnderTheHood.State(basic: Shared(PProfBasic(uuid: uuid(), filePaths: filePaths, createdAt: date.now, presentation: .acc))))
           return .none
         }
       case .destination(.presented(.uth(.delegate(.onCancelImportButtonTapped)))), .destination(.presented(.uth(.delegate(.onImportViewAutoDismissed)))):
@@ -74,7 +76,7 @@ struct DropFeature {
           return .run { send in
             for fp in filePaths.reversed() {
               try await clock.sleep(for: .seconds(0.03))
-              let basic = PProfBasic(filePaths: [fp], presentation: .dft)
+              let basic = PProfBasic(uuid: uuid(), filePaths: [fp], createdAt: date.now, presentation: .dft)
               await send(.delegate(.addNewBasic(basic)), animation: .default)
               if fp == filePaths.first {
                 try await clock.sleep(for: .seconds(0.03))
@@ -83,7 +85,7 @@ struct DropFeature {
             }
           }
         } else {
-          let basic = PProfBasic(filePaths: uthFeature.basic.filePaths, presentation: uthFeature.basic.presentation)
+          let basic = PProfBasic(uuid: uuid(), filePaths: uthFeature.basic.filePaths, createdAt: date.now, presentation: uthFeature.basic.presentation)
           return .run { send in
             try await clock.sleep(for: .seconds(0.03))
             await send(.delegate(.addNewBasic(basic)), animation: .default)

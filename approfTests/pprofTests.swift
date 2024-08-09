@@ -1,8 +1,6 @@
 import Testing
 import AppKit
 
-@testable import pprof
-
 struct pprofTests {
 
     @Test func testExample() async throws {

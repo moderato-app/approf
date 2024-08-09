@@ -73,6 +73,11 @@
 		EBBB83272C60E4D6002F2892 /* NameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBB83262C60E4D6002F2892 /* NameView.swift */; };
 		EBBB83292C60E673002F2892 /* NameFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBB83282C60E673002F2892 /* NameFeature.swift */; };
 		EBBB832B2C60EC3A002F2892 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBB832A2C60EC3A002F2892 /* Date.swift */; };
+		EBBC581A2C668A0F00A72918 /* TestDropFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC58192C668A0F00A72918 /* TestDropFiles.swift */; };
+		EBBC581B2C668A0F00A72918 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC58172C668A0F00A72918 /* Dummy.swift */; };
+		EBBC581C2C668A0F00A72918 /* b.pb in Resources */ = {isa = PBXBuildFile; fileRef = EBBC58162C668A0F00A72918 /* b.pb */; };
+		EBBC581D2C668A0F00A72918 /* a.pb.gz in Resources */ = {isa = PBXBuildFile; fileRef = EBBC58152C668A0F00A72918 /* a.pb.gz */; };
+		EBBC581F2C669A8100A72918 /* TestDropFilesUsingSwiftTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBC581E2C669A8100A72918 /* TestDropFilesUsingSwiftTesting.swift */; };
 		EBD20FBD2C42D06300EE88D7 /* LightsOff.metal in Sources */ = {isa = PBXBuildFile; fileRef = EBD20FBC2C42D06300EE88D7 /* LightsOff.metal */; };
 		EBD292B42C430F8000FFB285 /* ShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD292B32C430F8000FFB285 /* ShortcutView.swift */; };
 		EBD292BA2C430F9700FFB285 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = EBD292B92C430F9700FFB285 /* KeyboardShortcuts */; };
@@ -192,6 +197,12 @@
 		EBBB83262C60E4D6002F2892 /* NameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameView.swift; sourceTree = "<group>"; };
 		EBBB83282C60E673002F2892 /* NameFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameFeature.swift; sourceTree = "<group>"; };
 		EBBB832A2C60EC3A002F2892 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		EBBC58152C668A0F00A72918 /* a.pb.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = a.pb.gz; sourceTree = "<group>"; };
+		EBBC58162C668A0F00A72918 /* b.pb */ = {isa = PBXFileReference; lastKnownFileType = file; path = b.pb; sourceTree = "<group>"; };
+		EBBC58172C668A0F00A72918 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
+		EBBC58192C668A0F00A72918 /* TestDropFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDropFiles.swift; sourceTree = "<group>"; };
+		EBBC581E2C669A8100A72918 /* TestDropFilesUsingSwiftTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDropFilesUsingSwiftTesting.swift; sourceTree = "<group>"; };
+		EBBC58202C669B0500A72918 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = TestPlan.xctestplan; path = approfTests/TestPlan.xctestplan; sourceTree = "<group>"; };
 		EBD20FBC2C42D06300EE88D7 /* LightsOff.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = LightsOff.metal; sourceTree = "<group>"; };
 		EBD292B32C430F8000FFB285 /* ShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutView.swift; sourceTree = "<group>"; };
 		EBD292BB2C43116400FFB285 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -376,6 +387,9 @@
 		EB94443A2C42F7050050F0D1 /* approfTests */ = {
 			isa = PBXGroup;
 			children = (
+				EBBC58182C668A0F00A72918 /* Files */,
+				EBBC58192C668A0F00A72918 /* TestDropFiles.swift */,
+				EBBC581E2C669A8100A72918 /* TestDropFilesUsingSwiftTesting.swift */,
 				EB9444392C42F7050050F0D1 /* pprofTests.swift */,
 			);
 			path = approfTests;
@@ -407,6 +421,16 @@
 				EB1003EC2C4A9860009E61F2 /* NotificationFeature.swift */,
 			);
 			path = UnderTheHood;
+			sourceTree = "<group>";
+		};
+		EBBC58182C668A0F00A72918 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				EBBC58152C668A0F00A72918 /* a.pb.gz */,
+				EBBC58162C668A0F00A72918 /* b.pb */,
+				EBBC58172C668A0F00A72918 /* Dummy.swift */,
+			);
+			path = Files;
 			sourceTree = "<group>";
 		};
 		EBD292B22C430E8B00FFB285 /* Process */ = {
@@ -464,6 +488,7 @@
 		EBEF3A152C3B255A0003477D = {
 			isa = PBXGroup;
 			children = (
+				EBBC58202C669B0500A72918 /* TestPlan.xctestplan */,
 				EB7D79402C65635200CCD4F3 /* .github */,
 				EB9444292C42F6E50050F0D1 /* approf */,
 				EB94443A2C42F7050050F0D1 /* approfTests */,
@@ -570,6 +595,7 @@
 					};
 					EBEF3A2E2C3B255B0003477D = {
 						CreatedOnToolsVersion = 16.0;
+						TestTargetID = EBEF3A1D2C3B255A0003477D;
 					};
 					EBEF3A382C3B255B0003477D = {
 						CreatedOnToolsVersion = 16.0;
@@ -619,6 +645,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBBC581C2C668A0F00A72918 /* b.pb in Resources */,
+				EBBC581D2C668A0F00A72918 /* a.pb.gz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,6 +742,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBBC581A2C668A0F00A72918 /* TestDropFiles.swift in Sources */,
+				EBBC581B2C668A0F00A72918 /* Dummy.swift in Sources */,
+				EBBC581F2C669A8100A72918 /* TestDropFilesUsingSwiftTesting.swift in Sources */,
 				EB94443B2C42F7050050F0D1 /* pprofTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -935,32 +966,36 @@
 		EBEF3A472C3B255B0003477D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 46PN73H4K6;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = the.future.app.pprof.pprofTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/approf.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/approf";
 			};
 			name = Debug;
 		};
 		EBEF3A482C3B255B0003477D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 46PN73H4K6;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = the.future.app.pprof.pprofTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/approf.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/approf";
 			};
 			name = Release;
 		};
@@ -971,6 +1006,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 46PN73H4K6;
 				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = the.future.app.pprof.pprofUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -987,6 +1023,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 46PN73H4K6;
 				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = the.future.app.pprof.pprofUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
