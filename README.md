@@ -5,7 +5,6 @@ Open pprof profiles without command-line hassle ✨.
 
 ## Install
 ```bash
-brew tap moderato-app/homebrew-brew
 brew install approf
 ```
 
