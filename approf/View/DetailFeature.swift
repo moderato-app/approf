@@ -148,6 +148,7 @@ struct DetailFeature {
   }
 
   func cleanUp(state: inout Self.State) {
+    state.subViewType = .underTheHood
     state.basic.terminalOutput = []
     state.basic.httpDetectLog = []
     state.basic.finalCommandArgs = []
