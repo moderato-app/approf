@@ -1,11 +1,13 @@
 // Created for approf in 2024
 
 import ComposableArchitecture
-import XCTest
+import Testing
+import Foundation
 
 @testable import approf
 
-final class TestDropFiles: XCTestCase {
+struct TestDropFiles {
+  @Test
   @MainActor
   func testDropFiles() async throws {
     let urlA = Bundle(for: Dummy.self).url(forResource: "a.pb", withExtension: "gz")!
@@ -45,7 +47,7 @@ final class TestDropFiles: XCTestCase {
     await dropStore.send(.onCursorEnter) {
       $0.dropping = true
     }
-    var sharedBasic = PProfBasic(uuid: UUID(0), filePaths: [urlA.path(percentEncoded: false), urlB.path(percentEncoded: false)], createdAt: dg.now, presentation: .diff)
+    let sharedBasic = PProfBasic(uuid: UUID(0), filePaths: [urlA.path(percentEncoded: false), urlB.path(percentEncoded: false)], createdAt: dg.now, presentation: .diff)
 
     await clock.advance(by: .seconds(1))
     await dropStore.send(.onDropEnds([urlA, urlB])) {

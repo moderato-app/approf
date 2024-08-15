@@ -18,20 +18,31 @@ struct NavigaionView: View {
 
   @ViewBuilder
   private func list() -> some View {
-    List(selection: $store.pprofsSelectedId.sending(\.onPprofsSelectedIdChanged).animation()) {
-      ForEach(store.scope(state: \.pprofs, action: \.pprofs), id: \.basic.id) { pprofStore in
-        PProfRowView(store: pprofStore)
-          .addHiddenView(pprofStore.id) {
-            if store.pprofsSelectedId == pprofStore.id {
-              rowContextMenu(pprofUUID: pprofStore.id)
+    ScrollViewReader { proxy in
+      List(selection: $store.pprofsSelectedId.sending(\.onPprofsSelectedIdChanged).animation()) {
+        ForEach(store.scope(state: \.pprofs, action: \.pprofs), id: \.basic.id) { pprofStore in
+          PProfRowView(store: pprofStore)
+            .addHiddenView(pprofStore.id) {
+              if store.pprofsSelectedId == pprofStore.id {
+                rowContextMenu(pprofUUID: pprofStore.id)
+              }
             }
-          }
-          .contextMenu { rowContextMenu(pprofUUID: pprofStore.id) }
-          .listRowSeparator(.visible)
-          .listRowSeparatorTint(.secondary.opacity(0.5))
+            .contextMenu { rowContextMenu(pprofUUID: pprofStore.id) }
+            .listRowSeparator(.visible)
+            .listRowSeparatorTint(.secondary.opacity(0.5))
+            .id(pprofStore.id)
+        }
+        .onMove { from, to in
+          store.send(.onMove(from: from, to: to), animation: .default)
+        }
       }
-      .onMove { from, to in
-        store.send(.onMove(from: from, to: to), animation: .default)
+      .onChange(of: store.pprofs.count) { old, neu in
+        // scroll to top of the list when new elements are added
+        if neu > old, let first = store.pprofs.first {
+          withAnimation {
+            proxy.scrollTo(first.id, anchor: .top)
+          }
+        }
       }
     }
   }

@@ -32,16 +32,18 @@ struct UnderTheHood {
     case newNotification(String)
     case newCountDownNotification(String, UInt)
 
+    case onCancelImportButtonTapped
+
     case delegate(Delegate)
 
     @CasePathable
     enum Delegate {
       // MARK: for import view
-      case onImportViewAutoDismissed
-      case onCancelImportButtonTapped
       case onConfirmImportButtonTapped
     }
   }
+
+  @Dependency(\.dismiss) var dismiss
 
   var body: some ReducerOf<Self> {
     Reduce { state, action in
@@ -93,6 +95,8 @@ struct UnderTheHood {
       case let .newCountDownNotification(text, seconds):
         state.destination = .notification(.init(text: text, seconds: seconds))
         return .none
+      case .onCancelImportButtonTapped:
+        return .run { _ in await dismiss() }
       }
     }
     .ifLet(\.$destination, action: \.destination)

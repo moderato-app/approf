@@ -16,16 +16,13 @@ struct ImportView: View {
     .toolbar {
       toolbar()
     }
-    .onDisappear {
-      store.send(.delegate(.onImportViewAutoDismissed))
-    }
   }
 
   @ToolbarContentBuilder
   private func toolbar() -> some ToolbarContent {
     ToolbarItem(placement: .destructiveAction) {
       Button("Cancel(ESC)", role: .cancel) {
-        store.send(.delegate(.onCancelImportButtonTapped))
+        store.send(.onCancelImportButtonTapped)
       }
     }
     ToolbarItem(placement: .confirmationAction) {
