@@ -24,15 +24,14 @@ struct AppFeature {
     case onMoveUpCommand
     case onMoveDownCommand
 
-    
     case deleteNow(UUID)
     case pprofs(IdentifiedActionOf<DetailFeature>)
-
 
     case drop(DropFeature.Action)
   }
 
   @Dependency(\.uuid) var uuid
+  @Dependency(\.continuousClock) var clock
 
   var body: some ReducerOf<Self> {
     Scope(state: \.drop, action: \.drop) {
@@ -105,7 +104,19 @@ struct AppFeature {
       case .pprofs:
         return .none
       case let .drop(.delegate(.addNewBasic(basic))):
-        self.addNewBasic(&state, basic)
+        self.addNewBasics(&state, [basic])
+        return .run { send in
+          try await clock.sleep(for: .seconds(0.2))
+          await send(.onPprofsSelectedIdChanged(basic.id))
+        }
+      case let .drop(.delegate(.addNewBasics(basics))):
+        self.addNewBasics(&state, basics)
+        if let first = basics.first {
+          return .run { send in
+            try await clock.sleep(for: .seconds(0.2))
+            await send(.onPprofsSelectedIdChanged(first.id))
+          }
+        }
         return .none
       case let .drop(.delegate(.selectPProf(uuid))):
         if state.pprofs.contains(where: { $0.id == uuid }) {
@@ -121,8 +132,8 @@ struct AppFeature {
     }
   }
 
-  func addNewBasic(_ state: inout Self.State, _ basic: PProfBasic) {
-    state.basics.insert(basic, at: 0)
+  func addNewBasics(_ state: inout Self.State, _ basics: [PProfBasic]) {
+    state.basics.insert(contentsOf: basics, at: 0)
     state.synced = false
     sync(&state)
   }
@@ -180,7 +191,7 @@ struct AppFeature {
       }
     }
   }
-  
+
   private func move(_ state: inout Self.State, _ source: IndexSet, _ destination: Int) {
     state.pprofs.move(fromOffsets: source, toOffset: destination)
   }
@@ -202,7 +213,6 @@ struct AppFeature {
       state.pprofs.move(fromOffsets: IndexSet([index]), toOffset: index + 2)
     }
   }
-
 }
 
 extension PersistenceReaderKey

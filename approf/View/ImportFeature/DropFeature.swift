@@ -25,6 +25,7 @@ struct DropFeature {
     @CasePathable
     enum Delegate {
       case addNewBasic(PProfBasic)
+      case addNewBasics([PProfBasic])
       case selectPProf(UUID)
     }
   }
@@ -49,13 +50,8 @@ struct DropFeature {
         if filePaths.isEmpty {
           return .none
         } else if filePaths.count == 1 {
-          let basic = PProfBasic(uuid: uuid(), filePaths: filePaths, createdAt: date.now ,presentation: .dft)
-          return .run { send in
-            try await clock.sleep(for: .seconds(0.1))
-            await send(.delegate(.addNewBasic(basic)), animation: .default)
-            try await clock.sleep(for: .seconds(0.1))
-            await send(.delegate(.selectPProf(basic.id)), animation: .default)
-          }
+          let basic = PProfBasic(uuid: uuid(), filePaths: filePaths, createdAt: date.now, presentation: .dft)
+          return .send(.delegate(.addNewBasic(basic)))
         } else if filePaths.count == 2 {
           state.destination = .uth(UnderTheHood.State(basic: Shared(PProfBasic(uuid: uuid(), filePaths: filePaths, createdAt: date.now, presentation: .diff))))
           return .none
@@ -63,34 +59,26 @@ struct DropFeature {
           state.destination = .uth(UnderTheHood.State(basic: Shared(PProfBasic(uuid: uuid(), filePaths: filePaths, createdAt: date.now, presentation: .acc))))
           return .none
         }
-      case .destination(.presented(.uth(.delegate(.onCancelImportButtonTapped)))), .destination(.presented(.uth(.delegate(.onImportViewAutoDismissed)))):
-        state.destination = nil
-        return .none
       case .destination(.presented(.uth(.delegate(.onConfirmImportButtonTapped)))):
         guard case let .uth(uthFeature) = state.destination else {
           return .none
         }
         state.destination = nil
+        // When DropView disappears, the animation for the profs list doesn't work.
+        // To fix this, update the profs list after DropView has fully disappeared.
         if case .dft = uthFeature.basic.presentation {
-          let filePaths = uthFeature.basic.filePaths
+          let basics = uthFeature.basic.filePaths.reversed().map {
+            PProfBasic(uuid: uuid(), filePaths: [$0], createdAt: date.now, presentation: .dft)
+          }
           return .run { send in
-            for fp in filePaths.reversed() {
-              try await clock.sleep(for: .seconds(0.03))
-              let basic = PProfBasic(uuid: uuid(), filePaths: [fp], createdAt: date.now, presentation: .dft)
-              await send(.delegate(.addNewBasic(basic)), animation: .default)
-              if fp == filePaths.first {
-                try await clock.sleep(for: .seconds(0.03))
-                await send(.delegate(.selectPProf(basic.id)), animation: .default)
-              }
-            }
+            try await clock.sleep(for: .seconds(0.25))
+            await send(.delegate(.addNewBasics(basics)))
           }
         } else {
           let basic = PProfBasic(uuid: uuid(), filePaths: uthFeature.basic.filePaths, createdAt: date.now, presentation: uthFeature.basic.presentation)
           return .run { send in
-            try await clock.sleep(for: .seconds(0.03))
-            await send(.delegate(.addNewBasic(basic)), animation: .default)
-            try await clock.sleep(for: .seconds(0.03))
-            await send(.delegate(.selectPProf(basic.id)), animation: .default)
+            try await clock.sleep(for: .seconds(0.25))
+            await send(.delegate(.addNewBasic(basic)))
           }
         }
       case .destination:
