@@ -36,7 +36,7 @@ struct LaunchingFeature {
     }
   }
   
-  enum CancelID { case terminalReader, httpDetector, timer }
+  enum CancelID { case terminalReader, httpDetector }
   @Dependency(\.continuousClock) var clock
   @Dependency(\.date) var date
   
@@ -90,12 +90,7 @@ struct LaunchingFeature {
           }
           state.process = nil
         }
-        return .merge(
-          .cancel(id: CancelID.timer),
-          .cancel(id: CancelID.httpDetector),
-          .cancel(id: CancelID.terminalReader),
-          .send(.delegate(.onTermimated))
-        )
+        return .send(.delegate(.onTermimated))
       case let .readTerminal(stream):
         state.readingTerminal.toggle()
         if state.readingTerminal {
@@ -132,8 +127,6 @@ struct LaunchingFeature {
               await send(.httpUpdated(httpResult))
             }
             
-            // .cancel(id: CancelID.httpDetector) may fail to cancel this task. Limit retry times to 5
-            var tried = 0
             for await _ in self.clock.timer(interval: .seconds(1)) {
               let (ok, httpResult) = await detectHttpOk2(httpUrl: httpUrl, bodyShouldContain: "<h1><a href=\"./\">pprof</a></h1>")
               if ok {
@@ -141,10 +134,6 @@ struct LaunchingFeature {
               } else {
                 await send(.httpUpdated(httpResult))
               }
-              tried += 1
-//              if tried == 5 {
-//                return
-//              }
             }
           }
           .cancellable(id: CancelID.httpDetector)
@@ -163,12 +152,7 @@ struct LaunchingFeature {
         return .none
       case .httpReady:
         if let process = state.process, let port = state.portReady {
-          return .merge(
-            .cancel(id: CancelID.timer),
-            .cancel(id: CancelID.httpDetector),
-            .cancel(id: CancelID.terminalReader),
-            .send(.delegate(.onSuccess(process, port, state.goToWebOnSuccess)))
-          )
+          return .send(.delegate(.onSuccess(process, port, state.goToWebOnSuccess)))
         } else {
           return .send(.fail(.process("failed: let process = state.process, let port = state.portReady")))
         }
@@ -178,7 +162,6 @@ struct LaunchingFeature {
             try await self.clock.sleep(for: .seconds(timeout))
             await send(.launchingTimeout(0))
           }
-          .cancellable(id: CancelID.timer)
         }
         
         if state.portReady == nil || !state.httpReady || state.process?.isRunning ?? false {
@@ -187,12 +170,7 @@ struct LaunchingFeature {
         return .none
       case let .fail(cause):
         state.process?.terminate()
-        return .merge(
-          .cancel(id: CancelID.timer),
-          .cancel(id: CancelID.httpDetector),
-          .cancel(id: CancelID.terminalReader),
-          .send(.delegate(.onFailed(cause)))
-        )
+        return .send(.delegate(.onFailed(cause)))
       }
     }
   }
