@@ -31,7 +31,7 @@ struct MacOS15App: App {
     }
     .defaultWindowPlacement { _, context in
       let displayBounds = context.defaultDisplay.visibleRect
-      let size = CGSize(width: displayBounds.width * 0.8, height: displayBounds.height * 0.8)
+      let size = CGSize(width: displayBounds.width * 0.8, height: displayBounds.height)
       return WindowPlacement(size: size)
     }
     .commands {
@@ -53,6 +53,7 @@ struct MacOS15App: App {
         .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
         .containerBackground(.ultraThinMaterial, for: .window)
         .windowMinimizeBehavior(.disabled)
+        .windowResizeBehavior(.disabled)
         .preferredColorScheme(asm.computedColorScheme)
     }
     .windowResizability(.contentSize)

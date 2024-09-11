@@ -45,7 +45,6 @@ struct DetailFeature {
     }
   }
 
-  enum CancelID { case timer }
   @Dependency(\.continuousClock) var clock
 
   var body: some ReducerOf<Self> {
