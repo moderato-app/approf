@@ -1088,7 +1088,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = exactVersion;
-				version = 1.14.0;
+				version = 1.15.0;
 			};
 		};
 		EBD292B12C430D5800FFB285 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
