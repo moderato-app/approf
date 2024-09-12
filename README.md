@@ -36,3 +36,10 @@ _Translucent background is only availble on macOS **Sequoia 15.0** or later_
 * SwiftUI and AppKit as the UI framework.
 * The Composable Architecture for state management.
 * Running [pprof](https://github.com/golang/go/tree/master/src/cmd/pprof) binay in a process.
+
+## Credits
+<a href="https://golangweekly.com/latest" target="_blank">
+  <img width="200" alt="image" src="https://github.com/user-attachments/assets/25490d69-576c-4d47-9f3a-6b8a1200e57b">
+</a>
+
+Thanks to [Golang Weekly](https://golangweekly.com/latest) for the shoutout!
