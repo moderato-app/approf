@@ -21,6 +21,7 @@
 		EB1F1FC52C45B38D00FD585E /* Color+Luminance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1F1FC42C45B38D00FD585E /* Color+Luminance.swift */; };
 		EB2619752C60AD0A007D4932 /* test-default-app.pb.gz in Resources */ = {isa = PBXBuildFile; fileRef = EB2619742C60AD0A007D4932 /* test-default-app.pb.gz */; };
 		EB2A0B4A2C4663CB0085609E /* CommandGenerate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2A0B492C4663CB0085609E /* CommandGenerate.swift */; };
+		EB30B0AD2C96CF81001529B5 /* MyWKWebview.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB30B0AC2C96CF81001529B5 /* MyWKWebview.swift */; };
 		EB5026812C3D139F007C6282 /* Other.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5026802C3D139F007C6282 /* Other.swift */; };
 		EB59362F2C4053D200088AB9 /* Others.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB59362E2C4053D200088AB9 /* Others.swift */; };
 		EB62B5812C5FE9FD00188A9D /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB62B5802C5FE9FD00188A9D /* ImportView.swift */; };
@@ -141,6 +142,7 @@
 		EB1F1FC42C45B38D00FD585E /* Color+Luminance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Luminance.swift"; sourceTree = "<group>"; };
 		EB2619742C60AD0A007D4932 /* test-default-app.pb.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "test-default-app.pb.gz"; sourceTree = "<group>"; };
 		EB2A0B492C4663CB0085609E /* CommandGenerate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandGenerate.swift; sourceTree = "<group>"; };
+		EB30B0AC2C96CF81001529B5 /* MyWKWebview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWKWebview.swift; sourceTree = "<group>"; };
 		EB5026802C3D139F007C6282 /* Other.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Other.swift; sourceTree = "<group>"; };
 		EB59362E2C4053D200088AB9 /* Others.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Others.swift; sourceTree = "<group>"; };
 		EB62B5802C5FE9FD00188A9D /* ImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportView.swift; sourceTree = "<group>"; };
@@ -470,6 +472,7 @@
 				EB1F1FC42C45B38D00FD585E /* Color+Luminance.swift */,
 				EB8624A82C47B19D0010E153 /* File.swift */,
 				EB9355662C47F4E50055C90D /* Image.swift */,
+				EB30B0AC2C96CF81001529B5 /* MyWKWebview.swift */,
 			);
 			path = "SwiftUI AppKit";
 			sourceTree = "<group>";
@@ -725,6 +728,7 @@
 				EB1F1FC32C45B2B300FD585E /* Color.swift in Sources */,
 				EB62B5812C5FE9FD00188A9D /* ImportView.swift in Sources */,
 				EB85AB972C3E94DC0080200A /* IdleFeature.swift in Sources */,
+				EB30B0AD2C96CF81001529B5 /* MyWKWebview.swift in Sources */,
 				EB5026812C3D139F007C6282 /* Other.swift in Sources */,
 				EB659BC52C3EE91400F3F84E /* Command.swift in Sources */,
 				EB85AB992C3EAA410080200A /* SuccessView.swift in Sources */,

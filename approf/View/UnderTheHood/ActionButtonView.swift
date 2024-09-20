@@ -27,16 +27,21 @@ struct ActionButtonView: View {
         store.send(.launchButtonTapped)
       }
       .buttonStyle(BorderedProminentButtonStyle())
+      .keyboardShortcut("r", modifiers: [])
+      .help("R")
     case .failure:
       Button("Relaunch") {
         store.send(.launchButtonTapped)
       }
       .buttonStyle(BorderedProminentButtonStyle())
+      .keyboardShortcut("r", modifiers: [])
+      .help("R")
     case let .success(su):
       HStack(alignment: .firstTextBaseline) {
         Button("Stop") {
           store.send(.stopButtonTapped)
         }
+        .keyboardShortcut("x", modifiers: [])
         if !store.basic.equalsSnapshot(su.snapshot) {
           HStack(alignment: .firstTextBaseline, spacing: 0) {
             Text("Changes detected, ").foregroundStyle(.secondary)
@@ -55,6 +60,8 @@ struct ActionButtonView: View {
             }
             .buttonStyle(.plain)
             .foregroundStyle(.tint)
+            .keyboardShortcut("w", modifiers: [])
+            .help("W")
             Text("?").foregroundStyle(.secondary)
           }
         }
