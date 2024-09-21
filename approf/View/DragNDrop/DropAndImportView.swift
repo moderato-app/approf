@@ -3,10 +3,13 @@ import ComposableArchitecture
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct DropView: View {
-  @Bindable var store: StoreOf<DropFeature>
+struct DropAndImportView: View {
+  @Bindable var store: StoreOf<DropAndImportFeature>
 
   @State var viewSize = CGSize(width: 800, height: 600)
+  @State var dropping = false
+  @State var uiState = UIState.shared
+
   var body: some View {
     Rectangle()
       .fill(.clear)
@@ -15,11 +18,16 @@ struct DropView: View {
       } action: { viewSize = $0 }
       .allowsHitTesting(false)
       .overlay {
-        if store.dropping {
+        if dropping && store.destination == nil {
           GradientBackgroundAnimation()
         }
       }
-      .onDrop(of: allowedImportFileTypes, delegate: DropFileDelegate(store: store))
+      .animation(.default, value: dropping)
+      .onDrop(of: allowedImportFileTypes, delegate: DropFileDelegate(dropping: $dropping) { urls in
+        if store.destination == nil{
+          store.send(.onDropEnds(urls))
+        }
+      })
       .sheet(
         item: $store.scope(state: \.destination?.uth, action: \.destination.uth)
       ) { importingStore in
@@ -33,28 +41,37 @@ struct DropView: View {
 }
 
 class DropFileDelegate: DropDelegate {
-  @Bindable var store: StoreOf<DropFeature>
+  @Binding var dropping: Bool
+  let onDropEnds: ([URL]) -> Void
+  let excludeArea: CGRect?
+
   private var cancellables = Set<AnyCancellable>()
 
-  init(store: StoreOf<DropFeature>) {
-    self.store = store
+  init(dropping: Binding<Bool>, excludeArea: CGRect? = nil, onDropEnds: @escaping ([URL]) -> Void) {
+    _dropping = dropping
+    self.excludeArea = excludeArea
+    self.onDropEnds = onDropEnds
   }
 
   func validateDrop(info: DropInfo) -> Bool {
-    if case .uth = store.destination {
-      return false
-    }
     return true
   }
 
   func dropEntered(info: DropInfo) {
-    store.send(.onCursorEnter, animation: .default)
+    if let excludeArea = excludeArea, excludeArea.contains(info.location) {
+      dropping = false
+    } else {
+      dropping = true
+    }
   }
 
-//    func dropUpdated(info: DropInfo) -> DropProposal? {}
+  func dropUpdated(info: DropInfo) -> DropProposal? {
+    dropEntered(info: info)
+    return nil
+  }
 
   func dropExited(info: DropInfo) {
-    store.send(.onCursorLeave, animation: .default)
+    dropping = false
   }
 
   func performDrop(info: DropInfo) -> Bool {
@@ -88,11 +105,10 @@ class DropFileDelegate: DropDelegate {
         let urls = result.compactMap { $0 } as [URL]
         log.info("imported \(urls.count) files")
         Task { @MainActor in
-          self.store.send(.onDropEnds(urls))
+          self.onDropEnds(urls)
         }
       }
       .store(in: &cancellables)
-
     return true
   }
 }

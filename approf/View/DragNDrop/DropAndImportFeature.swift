@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-struct DropFeature {
+struct DropAndImportFeature {
   @Reducer(state: .equatable)
   enum Destination {
     case uth(UnderTheHood)
@@ -10,14 +10,11 @@ struct DropFeature {
 
   @ObservableState
   struct State: Equatable {
-    var dropping = false
     @Presents var destination: Destination.State?
   }
 
   enum Action {
     case destination(PresentationAction<Destination.Action>)
-    case onCursorEnter
-    case onCursorLeave
     case onDropEnds([URL])
 
     case delegate(Delegate)
@@ -38,12 +35,6 @@ struct DropFeature {
     Reduce { state, action in
       switch action {
       case .delegate:
-        return .none
-      case .onCursorEnter:
-        state.dropping = true
-        return .none
-      case .onCursorLeave:
-        state.dropping = false
         return .none
       case let .onDropEnds(urls):
         let filePaths = urls.map { $0.path(percentEncoded: false) }

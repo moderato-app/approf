@@ -21,6 +21,7 @@ struct UnderTheHood {
     case onNameChanged(String)
     case onPresentationChanged(PProfPresentation)
     case onSelectFilesEnd([String])
+    case onAddURLs([URL])
 
     case onMove(from: IndexSet, to: Int)
     case onDeleteSelectedCommand
@@ -61,6 +62,10 @@ struct UnderTheHood {
         return .none
       case let .onSelectFilesEnd(filePaths):
         addFiles(&state, filePaths: filePaths)
+        return .none
+      case let .onAddURLs(urls):
+        let u = urls.map { $0.path(percentEncoded: false) }
+        addFiles(&state, filePaths: u)
         return .none
       case let .onMove(from, to):
         move(&state, from, to)

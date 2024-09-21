@@ -1,17 +1,18 @@
 // Created for approf in 2024
 
 import ComposableArchitecture
+import Foundation
 import SwiftUI
 
 struct FileListView: View {
   @Bindable var store: StoreOf<UnderTheHood>
   var importing: Bool = false
+  @State var uiState = UIState.shared
 
   var body: some View {
     VStack(alignment: .leading) {
       HStack(alignment: .firstTextBaseline, spacing: 4) {
         Image(systemName: "folder")
-        //          .foregroundColor(.blue)
         Text("Files")
           .foregroundStyle(.secondary)
       }
@@ -77,6 +78,9 @@ struct FileListView: View {
           .fill(.bar)
           .strokeBorder(.secondary.opacity(0.5), lineWidth: 0.5)
       )
+    }
+    .overlay{
+      DropAndAppendView(store: store)
     }
   }
 
