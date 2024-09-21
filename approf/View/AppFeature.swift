@@ -10,7 +10,7 @@ struct AppFeature {
     var pprofs: IdentifiedArrayOf<DetailFeature.State> = .init()
     var pprofsSelectedId: UUID?
 
-    var drop: DropFeature.State = .init()
+    var drop: DropAndImportFeature.State = .init()
   }
 
   enum Action {
@@ -27,7 +27,7 @@ struct AppFeature {
     case deleteNow(UUID)
     case pprofs(IdentifiedActionOf<DetailFeature>)
 
-    case drop(DropFeature.Action)
+    case drop(DropAndImportFeature.Action)
   }
 
   @Dependency(\.uuid) var uuid
@@ -35,7 +35,7 @@ struct AppFeature {
 
   var body: some ReducerOf<Self> {
     Scope(state: \.drop, action: \.drop) {
-      DropFeature()
+      DropAndImportFeature()
     }
 
     Reduce { state, action in

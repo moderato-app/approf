@@ -9,7 +9,7 @@ struct ContentView: View {
     NavigaionView(store: store)
       .onHover { uiState.mouseInsideWindow = $0 }
       .overlay {
-        DropView(store: store.scope(state: \.drop, action: \.drop))
+        DropAndImportView(store: store.scope(state: \.drop, action: \.drop))
       }
   }
 }

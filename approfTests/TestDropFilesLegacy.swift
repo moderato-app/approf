@@ -22,8 +22,8 @@ final class TestDropFilesLegacy: XCTestCase {
       $0.date = dg
     }
 
-    let dropStore = TestStore(initialState: DropFeature.State()) {
-      DropFeature()
+    let dropStore = TestStore(initialState: DropAndImportFeature.State()) {
+      DropAndImportFeature()
     } withDependencies: {
       $0.uuid = .incrementing
       $0.continuousClock = clock
@@ -33,18 +33,7 @@ final class TestDropFilesLegacy: XCTestCase {
     await store.send(.onAppear) {
       $0.synced = true
     }
-
-    await dropStore.send(.onCursorEnter) {
-      $0.dropping = true
-    }
-
-    await dropStore.send(.onCursorLeave) {
-      $0.dropping = false
-    }
-
-    await dropStore.send(.onCursorEnter) {
-      $0.dropping = true
-    }
+    
     let sharedBasic = PProfBasic(uuid: UUID(0), filePaths: [urlA.path(percentEncoded: false), urlB.path(percentEncoded: false)], createdAt: dg.now, presentation: .diff)
 
     await clock.advance(by: .seconds(1))
